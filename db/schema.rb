@@ -10,27 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223034017) do
+ActiveRecord::Schema.define(version: 20180223180940) do
 
   create_table "course_offerings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
     t.string "course_uuid"
     t.integer "term_code"
     t.string "name"
-    t.string "short_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["course_uuid"], name: "index_course_offerings_on_course_uuid"
+    t.index ["uuid"], name: "index_course_offerings_on_uuid", unique: true
   end
 
   create_table "courses", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
     t.string "subject_code"
     t.integer "number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
-  create_table "grade_distributions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "grade_distributions", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_offering_uuid"
     t.string "section_number"
     t.integer "a_count"
@@ -49,21 +47,19 @@ ActiveRecord::Schema.define(version: 20180223034017) do
     t.integer "nw_count"
     t.integer "nr_count"
     t.integer "other_count"
+    t.index ["course_offering_uuid"], name: "index_grade_distributions_on_course_offering_uuid"
   end
 
   create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "id"
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "rooms", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
     t.string "facility_code"
     t.string "room_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["uuid"], name: "index_rooms_on_uuid", unique: true
   end
 
   create_table "schedules", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -77,8 +73,7 @@ ActiveRecord::Schema.define(version: 20180223034017) do
     t.boolean "fri"
     t.boolean "sat"
     t.boolean "sun"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["uuid"], name: "index_schedules_on_uuid", unique: true
   end
 
   create_table "sections", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -87,15 +82,15 @@ ActiveRecord::Schema.define(version: 20180223034017) do
     t.string "number"
     t.string "section_type"
     t.string "schedule_uuid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["course_offering_uuid"], name: "index_sections_on_course_offering_uuid"
+    t.index ["uuid"], name: "index_sections_on_uuid", unique: true
   end
 
-  create_table "teachings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "teachings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "section_uuid"
     t.string "instructor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["instructor_id"], name: "index_teachings_on_instructor_id"
+    t.index ["section_uuid"], name: "index_teachings_on_section_uuid"
   end
 
 end

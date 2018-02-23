@@ -1,11 +1,6 @@
 class CourseOffering < ApplicationRecord
   self.primary_key = :uuid
 
-  def name
-    # todo
-    short_name
-  end
-
   def term_name
     # get season
     season_id = term_code % 10

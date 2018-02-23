@@ -7,7 +7,8 @@ class Course < ApplicationRecord
     # todo?
     Course.select('DISTINCT(courses.uuid), courses.subject_code, courses.number')
         .joins("INNER JOIN course_offerings ON course_offerings.course_uuid = courses.uuid")
-        .where('short_name LIKE ?', "%#{query}%")
+        .where('courses.subject_code = ? OR courses.number = ? OR course_offerings.short_name LIKE ?',
+               query, query, "%#{query}%")
   end
 
   def name

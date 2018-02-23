@@ -1,6 +1,6 @@
 class CreateGradeDistributions < ActiveRecord::Migration[5.1]
   def change
-    create_table :grade_distributions do |t|
+    create_table :grade_distributions, id: false do |t|
       t.string :course_offering_uuid
       t.string :section_number
       t.integer :a_count

@@ -5,7 +5,6 @@ class CreateCourseOfferings < ActiveRecord::Migration[5.1]
       t.string :course_uuid
       t.integer :term_code
       t.string :name
-      t.string :short_name
     end
   end
 end

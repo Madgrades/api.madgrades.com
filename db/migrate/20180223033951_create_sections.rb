@@ -1,6 +1,6 @@
 class CreateSections < ActiveRecord::Migration[5.1]
   def change
-    create_table :sections, primary_key: :uuid, id: false do |t|
+    create_table :sections, id: false do |t|
       t.string :uuid
       t.string :course_offering_uuid
       t.string :number
