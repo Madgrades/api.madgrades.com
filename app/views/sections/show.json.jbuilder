@@ -1,4 +1,5 @@
 json.partial! "sections/section", section: @section
+json.course_offering_url course_offering_url(@section.course_offering_uuid)
 json.schedule do
   json.partial! "schedules/schedule", schedule: @section.schedule
 end
