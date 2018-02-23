@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  facility_code: MyString
+  room_code: MyString
+
+two:
+  uuid: MyString
+  facility_code: MyString
+  room_code: MyString

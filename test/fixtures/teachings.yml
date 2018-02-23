@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  section_uuid: MyString
+  instructor_id: MyString
+
+two:
+  section_uuid: MyString
+  instructor_id: MyString
