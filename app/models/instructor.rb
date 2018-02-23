@@ -3,6 +3,10 @@ class Instructor < ApplicationRecord
 
   default_scope { order(name: :asc) }
 
+  def self.search(query)
+    Instructor.where('id LIKE :query OR name LIKE :query', query: "%#{query}%")
+  end
+
   def teachings
     Teaching.where(instructor_id: id)
   end

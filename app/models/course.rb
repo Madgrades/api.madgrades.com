@@ -5,9 +5,9 @@ class Course < ApplicationRecord
 
   def self.search(query)
     # todo?
-    Course.select('DISTINCT(courses.uuid), courses.subject_code, courses.number')
+    Course.select('DISTINCT(courses.uuid) AS uuid, courses.subject_code, courses.number')
         .joins("INNER JOIN course_offerings ON course_offerings.course_uuid = courses.uuid")
-        .where('courses.subject_code = ? OR courses.number = ? OR course_offerings.short_name LIKE ?',
+        .where('courses.subject_code = ? OR courses.number = ? OR course_offerings.name LIKE ?',
                query, query, "%#{query}%")
   end
 

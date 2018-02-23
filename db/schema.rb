@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 20180223180940) do
   create_table "sections", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
     t.string "course_offering_uuid"
-    t.string "number"
     t.string "section_type"
+    t.string "number"
     t.string "schedule_uuid"
     t.index ["course_offering_uuid"], name: "index_sections_on_course_offering_uuid"
     t.index ["uuid"], name: "index_sections_on_uuid", unique: true
