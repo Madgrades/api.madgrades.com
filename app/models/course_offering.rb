@@ -1,7 +1,16 @@
 class CourseOffering < ApplicationRecord
   self.primary_key = :uuid
 
-  default_scope { order(term_code: :asc) }
+  default_scope { order(term_code: :desc) }
+
+  def subject_memberships
+    SubjectMembership.where(course_offering_uuid: uuid)
+  end
+
+  def subjects
+    # todo: have a separate table for subjects
+    subject_memberships.map(&:subject_code).uniq
+  end
 
   def term_name
     # get season

@@ -1,2 +1,0 @@
-class GradeDistributionsController < ApplicationController
-end

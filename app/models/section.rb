@@ -1,6 +1,8 @@
 class Section < ApplicationRecord
   self.primary_key = :uuid
 
+  default_scope { order(number: :asc) }
+
   def to_param
     uuid
   end
@@ -22,10 +24,8 @@ class Section < ApplicationRecord
   end
 
   def instructors
-    Teaching.where(section_uuid: uuid).map(&:instructor)
-  end
-
-  def grade_distribution
-    GradeDistribution.where(course_offering_uuid: course_offering_uuid, section_number: number).first
+    Instructor.select('instructors.*')
+              .joins('INNER JOIN teachings ON teachings.instructor_id = instructors.id')
+              .where('teachings.section_uuid = ?', uuid)
   end
 end

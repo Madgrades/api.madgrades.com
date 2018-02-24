@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223180940) do
+ActiveRecord::Schema.define(version: 20180224062119) do
 
   create_table "course_offerings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20180223180940) do
 
   create_table "courses", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
-    t.string "subject_code"
     t.integer "number"
+    t.string "name"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
@@ -84,6 +84,13 @@ ActiveRecord::Schema.define(version: 20180223180940) do
     t.string "schedule_uuid"
     t.index ["course_offering_uuid"], name: "index_sections_on_course_offering_uuid"
     t.index ["uuid"], name: "index_sections_on_uuid", unique: true
+  end
+
+  create_table "subject_memberships", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "subject_code"
+    t.string "course_offering_uuid"
+    t.index ["course_offering_uuid"], name: "index_subject_memberships_on_course_offering_uuid"
+    t.index ["subject_code"], name: "index_subject_memberships_on_subject_code"
   end
 
   create_table "teachings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

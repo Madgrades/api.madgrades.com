@@ -1,14 +1,34 @@
 class GradeDistribution < ApplicationRecord
+  def self.zero
+    res = GradeDistribution.new
+    res.attributes.each_pair do |name, value|
+      if name.ends_with?('_count')
+        res[name] = 0
+      end
+    end
+    res
+  end
+
+  def +(other)
+    res = GradeDistribution.new
+    attributes.each_pair do |name, value|
+      if value != nil && name.ends_with?('_count')
+        res[name] = value + other[name]
+      end
+    end
+    res
+  end
+
   def course_offering
     CourseOffering.find(course_offering_uuid)
   end
 
-  def course
-    course_offering.course
+  def sum?
+    course_offering_uuid.nil?
   end
 
   def sections
-    course_offering.sections.where(number: section_number)
+    Section.where(:course_offering_uuid => course_offering_uuid, :number => section_number)
   end
 
   def term_code
@@ -19,16 +39,19 @@ class GradeDistribution < ApplicationRecord
     course_offering.term_name
   end
 
-  def total
-    %w(a_count ab_count b_count bc_count c_count d_count f_count).map{|col| self[col]}.sum
+  def count
+    sum = 0
+    attributes.each_pair do |name, value|
+      if name.ends_with?('_count')
+        sum += value
+      end
+    end
+    sum
   end
 
-  def avg
-    total_counts = total
-    if total_counts == 0
-      return 0
-    end
-
+  def gpa
+    total = %w(a_count ab_count b_count bc_count c_count d_count f_count)
+                       .map{|col| self[col] || 0}.sum
     weighted = 4 * a_count +
         3.5 * ab_count +
         3 * b_count +
@@ -36,24 +59,6 @@ class GradeDistribution < ApplicationRecord
         2 * c_count +
         1 * d_count +
         0 * f_count
-    (4 * weighted / (4 * total_counts)).round(2)
-  end
-
-  def counts
-    result = {}
-    %w(a_count ab_count b_count bc_count c_count d_count f_count).each do |col|
-      result[col.partition('_').first.upcase] = self[col]
-    end
-    result
-  end
-
-  def percents(scale)
-    total = total_count
-    result = counts
-    result.each{|col, count| result[col] = scale * (count.to_d / total.to_d)}
-  end
-
-  def course
-    course_offering.course
+    (4 * weighted / (4 * total)).round(3)
   end
 end

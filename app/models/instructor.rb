@@ -1,7 +1,7 @@
 class Instructor < ApplicationRecord
   self.primary_key = :id
 
-  default_scope { order(name: :asc) }
+  default_scope { order(id: :asc) }
 
   def self.search(query)
     Instructor.where('id LIKE :query OR name LIKE :query', query: "%#{query}%")

@@ -1,2 +1,2 @@
-json.extract! course, :uuid, :subject_code, :number, :name
+json.extract! course, :uuid, :number, :name
 json.url course_url(course)

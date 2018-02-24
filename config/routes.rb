@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   get 'instructors/search(/:query)', to: 'instructors#search'
   resources :instructors, only: [:index, :show]
   resources :course_offerings, only: [:show]
+
+  get 'grades/courses(/:uuid)', to: 'grades#course', as: :course_grades
+  get 'grades/course_offerings(/:uuid)', to: 'grades#course_offering', as: :course_offering_grades
+  get 'grades/instructors(/:id)', to: 'grades#instructor', as: :instructor_grades
 end
