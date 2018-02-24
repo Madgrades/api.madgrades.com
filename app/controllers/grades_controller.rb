@@ -2,15 +2,27 @@ class GradesController < ApplicationController
   def course
     course = Course.find(params[:uuid])
     all = GradeDistribution
-               .joins('INNER JOIN course_offerings ON grade_distributions.course_offering_uuid = course_offerings.uuid')
-               .joins('INNER JOIN courses ON course_offerings.course_uuid = courses.uuid')
+               .joins('JOIN course_offerings ON grade_distributions.course_offering_uuid = course_offerings.uuid')
+               .joins('JOIN courses ON course_offerings.course_uuid = courses.uuid')
                .where('courses.uuid = ?', course.uuid)
+              .distinct
     render_all(all)
   end
 
   def course_offering
     course_offering = CourseOffering.find(params[:uuid])
     all = GradeDistribution.where(course_offering_uuid: course_offering.uuid)
+    render_all(all)
+  end
+
+  def section
+    section = Section.find(params[:uuid])
+    all = GradeDistribution
+              .joins('JOIN course_offerings ON course_offerings.uuid = grade_distributions.course_offering_uuid')
+              .joins('JOIN sections ON sections.course_offering_uuid = course_offerings.uuid')
+              .where('sections.uuid = ?', section.uuid)
+              .where(section_number: section.number)
+              .distinct
     render_all(all)
   end
 
@@ -48,7 +60,9 @@ class GradesController < ApplicationController
 
         @course_offerings.add(curr) unless added_already
       end
-      @grade_distribution = all.to_a.sum
+
+      # we start the summation with a non-term-affiliated grade distribution, zero
+      @grade_distribution = ([GradeDistribution.zero] + all).to_a.sum
 
       render :show
     end

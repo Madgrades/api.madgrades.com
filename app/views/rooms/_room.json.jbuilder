@@ -1,1 +1,1 @@
-json.extract! room, :uuid, :facility_code, :room_code
+json.extract! room, :facility_code, :room_code

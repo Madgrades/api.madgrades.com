@@ -1,4 +1,4 @@
-unless grade_distribution.sum?
+if grade_distribution.real?
   json.term_code grade_distribution.term_code
   json.course_offering_uuid grade_distribution.course_offering_uuid
   json.section_number grade_distribution.section_number

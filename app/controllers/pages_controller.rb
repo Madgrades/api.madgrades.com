@@ -4,10 +4,12 @@ class PagesController < ApplicationController
         message: 'hey :)',
         examples: {
             courses: courses_url,
+            courses_search: courses_search_url(query: 'Computer'),
             instructors: instructors_url,
-            instructor_grades: instructor_grades_url(:id => Instructor.first.id),
-            course_grades: course_grades_url(:uuid => Course.first.id),
-            course_offering_grades: course_offering_grades_url(:uuid => CourseOffering.first.id)
+            instructors_search: instructors_search_url(query: 'Michael Leckrone'),
+            instructor_grades: instructor_grades_url(id: Instructor.first.id),
+            course_grades: course_grades_url(uuid: Course.first.id),
+            course_offering_grades: course_offering_grades_url(uuid: CourseOffering.first.id)
         }
     }
   end

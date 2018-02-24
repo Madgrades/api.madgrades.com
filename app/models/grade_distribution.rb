@@ -23,8 +23,8 @@ class GradeDistribution < ApplicationRecord
     CourseOffering.find(course_offering_uuid)
   end
 
-  def sum?
-    course_offering_uuid.nil?
+  def real?
+    !course_offering_uuid.nil?
   end
 
   def sections

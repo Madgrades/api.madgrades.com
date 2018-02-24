@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180224062119) do
   create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "id"
     t.string "name"
+    t.index ["id"], name: "index_instructors_on_id", unique: true
   end
 
   create_table "rooms", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(version: 20180224062119) do
     t.string "course_offering_uuid"
     t.string "section_type"
     t.string "number"
+    t.string "room_uuid"
     t.string "schedule_uuid"
     t.index ["course_offering_uuid"], name: "index_sections_on_course_offering_uuid"
     t.index ["uuid"], name: "index_sections_on_uuid", unique: true

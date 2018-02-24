@@ -19,8 +19,12 @@ class Section < ApplicationRecord
     course_offering.course
   end
 
+  def room
+    Room.find(room_uuid)
+  end
+
   def schedule
-    Schedule.find_by_uuid(schedule_uuid)
+    Schedule.find(schedule_uuid)
   end
 
   def instructors
