@@ -1,6 +1,6 @@
 class GradesController < ApplicationController
   def course
-    course = Course.find(params[:uuid])
+    course = Course.find(params[:id])
     all = GradeDistribution
                .joins('JOIN course_offerings ON grade_distributions.course_offering_uuid = course_offerings.uuid')
                .joins('JOIN courses ON course_offerings.course_uuid = courses.uuid')
@@ -10,13 +10,13 @@ class GradesController < ApplicationController
   end
 
   def course_offering
-    course_offering = CourseOffering.find(params[:uuid])
+    course_offering = CourseOffering.find(params[:id])
     all = GradeDistribution.where(course_offering_uuid: course_offering.uuid)
     render_all(all)
   end
 
   def section
-    section = Section.find(params[:uuid])
+    section = Section.find(params[:id])
     all = GradeDistribution
               .joins('JOIN course_offerings ON course_offerings.uuid = grade_distributions.course_offering_uuid')
               .joins('JOIN sections ON sections.course_offering_uuid = course_offerings.uuid')

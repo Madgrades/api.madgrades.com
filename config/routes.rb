@@ -2,15 +2,17 @@ Rails.application.routes.draw do
   root :to => 'pages#index'
 
   get 'courses/search(/:query)', to: 'courses#search', as: :courses_search
+  get 'courses/:id/grades', to: 'grades#course', as: :course_grades
   resources :courses, only: [:index, :show]
-  resources :sections, only: [:show]
-  
-  get 'instructors/search(/:query)', to: 'instructors#search', as: :instructors_search
-  resources :instructors, only: [:index, :show]
+
+  get 'course_offerings/:id/grades', to: 'grades#course_offering', as: :course_offering_grades
   resources :course_offerings, only: [:show]
 
-  get 'grades/courses(/:uuid)', to: 'grades#course', as: :course_grades
-  get 'grades/sections(/:uuid)', to: 'grades#section', as: :section_grades
-  get 'grades/course_offerings(/:uuid)', to: 'grades#course_offering', as: :course_offering_grades
-  get 'grades/instructors(/:id)', to: 'grades#instructor', as: :instructor_grades
+  get 'instructors/search(/:query)', to: 'instructors#search', as: :instructors_search
+  get 'instructors/:id/grades', to: 'grades#instructor', as: :instructor_grades
+  resources :instructors, only: [:index, :show]
+
+  get 'sections/:id/grades', to: 'grades#section', as: :section_grades
+  resources :sections, only: [:show]
+
 end
