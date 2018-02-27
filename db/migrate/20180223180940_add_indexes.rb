@@ -6,6 +6,7 @@ class AddIndexes < ActiveRecord::Migration[5.1]
     add_index :course_offerings, :course_uuid
 
     add_index :grade_distributions, :course_offering_uuid
+    add_index :grade_distributions, :section_number
 
     add_index :instructors, :id, unique: true
 
@@ -14,6 +15,7 @@ class AddIndexes < ActiveRecord::Migration[5.1]
     add_index :schedules, :uuid, unique: true
 
     add_index :sections, :uuid, unique: true
+    add_index :sections, :number
     add_index :sections, :course_offering_uuid
 
     add_index :teachings, :section_uuid

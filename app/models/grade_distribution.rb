@@ -39,7 +39,11 @@ class GradeDistribution < ApplicationRecord
     course_offering.term_name
   end
 
-  def count
+  def gpa_total
+    %w(a_count ab_count b_count bc_count c_count d_count f_count).map{|col| self[col] || 0}.sum
+  end
+
+  def total
     sum = 0
     attributes.each_pair do |name, value|
       if name.ends_with?('_count')
@@ -50,8 +54,6 @@ class GradeDistribution < ApplicationRecord
   end
 
   def gpa
-    total = %w(a_count ab_count b_count bc_count c_count d_count f_count)
-                       .map{|col| self[col] || 0}.sum
     weighted = 4 * a_count +
         3.5 * ab_count +
         3 * b_count +
@@ -59,6 +61,6 @@ class GradeDistribution < ApplicationRecord
         2 * c_count +
         1 * d_count +
         0 * f_count
-    (4 * weighted / (4 * total)).round(3)
+    (4 * weighted / (4 * gpa_total)).round(3)
   end
 end

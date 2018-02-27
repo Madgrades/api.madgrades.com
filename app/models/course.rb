@@ -10,6 +10,10 @@ class Course < ApplicationRecord
         .distinct
   end
 
+  def names
+    course_offerings.map(&:name).uniq
+  end
+
   def subjects
     # todo: have a separate table for subjects
     subject_memberships.map(&:subject_code).uniq

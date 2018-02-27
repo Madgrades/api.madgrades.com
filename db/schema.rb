@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180224062119) do
 
   create_table "grade_distributions", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_offering_uuid"
-    t.string "section_number"
+    t.integer "section_number"
     t.integer "a_count"
     t.integer "ab_count"
     t.integer "b_count"
@@ -48,10 +48,11 @@ ActiveRecord::Schema.define(version: 20180224062119) do
     t.integer "nr_count"
     t.integer "other_count"
     t.index ["course_offering_uuid"], name: "index_grade_distributions_on_course_offering_uuid"
+    t.index ["section_number"], name: "index_grade_distributions_on_section_number"
   end
 
   create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "id"
+    t.integer "id"
     t.string "name"
     t.index ["id"], name: "index_instructors_on_id", unique: true
   end
@@ -81,10 +82,11 @@ ActiveRecord::Schema.define(version: 20180224062119) do
     t.string "uuid"
     t.string "course_offering_uuid"
     t.string "section_type"
-    t.string "number"
+    t.integer "number"
     t.string "room_uuid"
     t.string "schedule_uuid"
     t.index ["course_offering_uuid"], name: "index_sections_on_course_offering_uuid"
+    t.index ["number"], name: "index_sections_on_number"
     t.index ["uuid"], name: "index_sections_on_uuid", unique: true
   end
 
@@ -97,7 +99,7 @@ ActiveRecord::Schema.define(version: 20180224062119) do
 
   create_table "teachings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "section_uuid"
-    t.string "instructor_id"
+    t.integer "instructor_id"
     t.index ["instructor_id"], name: "index_teachings_on_instructor_id"
     t.index ["section_uuid"], name: "index_teachings_on_section_uuid"
   end
