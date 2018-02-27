@@ -1,6 +1,6 @@
 class Course < ApplicationRecord
   self.primary_key = :uuid
-  searchkick word_start: [:name, :subjects, :number]
+  searchkick word_start: [:name, :number_and_name]
 
   default_scope { order(number: :asc) }
 
@@ -10,14 +10,13 @@ class Course < ApplicationRecord
                   page: page,
                   per_page: per_page,
                   match: :word_start,
-                  fields: [:name, :subjects, :number])
+                  fields: [:number_and_name, :subjects])
   end
 
   def search_data
     {
-        name: names.join(' '),
         subjects: subjects.join(' '),
-        number: number
+        number_and_name: "#{number} #{names.join(' ')}"
     }
   end
 
