@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   end
 
   def search
-    @courses = Course.search(params[:query]).page(params[:page]).per(params[:per_page])
+    @courses = Course.search_with_page(params[:query], params[:page], params[:per_page])
     render :index
   end
 end

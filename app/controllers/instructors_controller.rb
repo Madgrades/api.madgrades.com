@@ -8,7 +8,7 @@ class InstructorsController < ApplicationController
   end
 
   def search
-    @instructors = Instructor.search(params[:query]).page(params[:page]).per(params[:per_page])
+    @instructors = Instructor.search_with_page(params[:query], params[:page], params[:per_page])
     render :index
   end
 end

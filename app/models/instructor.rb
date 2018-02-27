@@ -1,10 +1,23 @@
 class Instructor < ApplicationRecord
   self.primary_key = :id
+  searchkick word_start: [:name]
 
   default_scope { order(id: :asc) }
 
-  def self.search(query)
-    Instructor.where('id LIKE :query OR name LIKE :query', query: "%#{query}%")
+
+  def self.search_with_page(query, page, per_page)
+    per_page = [per_page || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
+    Instructor.search(query,
+                  page: page,
+                  per_page: per_page,
+                  match: :word_start,
+                  fields: [:name])
+  end
+
+  def search_data
+    {
+        name: name
+    }
   end
 
   def teachings
