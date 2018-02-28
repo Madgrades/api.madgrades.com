@@ -6,6 +6,8 @@ git_source(:github) do |repo_name|
 end
 
 
+gem 'dotenv'
+gem 'dotenv-rails'
 gem 'rack-cors'
 
 gem 'omniauth'
