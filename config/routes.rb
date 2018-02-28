@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   get 'sections/:id/grades', to: 'grades#section', as: :section_grades
   resources :sections, only: [:show]
 
-  resources :subjects, only: [:index]
+  get 'subjects/:id/courses', to: 'subjects#courses', as: :subject_courses
+  resources :subjects, only: [:index, :show]
 end

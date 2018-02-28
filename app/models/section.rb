@@ -28,8 +28,9 @@ class Section < ApplicationRecord
   end
 
   def instructors
-    Instructor.select('instructors.*')
-              .joins('INNER JOIN teachings ON teachings.instructor_id = instructors.id')
-              .where('teachings.section_uuid = ?', uuid)
+    Instructor
+        .joins('INNER JOIN teachings ON teachings.instructor_id = instructors.id')
+        .where('teachings.section_uuid = ?', uuid)
+        .distinct
   end
 end
