@@ -1,18 +1,24 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :set_json, :set_cors_headers
+  helper_method :current_user
 
-
-  private
-    def set_json
-      request.format = :json unless params[:format]
+  def current_user
+    if session[:user_id]
+      @current_user ||= User.find_by_id(session[:user_id])
+      if @current_user.nil?
+        self.current_user = nil
+      end
     end
+    @current_user
+  end
 
-    def set_cors_headers
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
-      headers['Access-Control-Request-Method'] = '*'
-      headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    end
+  def signed_in?
+    !!current_user
+  end
+
+  def current_user=(user)
+    @current_user = user
+    session[:user_id] = user.nil? ? nil : user.id
+  end
 end

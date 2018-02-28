@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228002934) do
+ActiveRecord::Schema.define(version: 20180228071257) do
 
   create_table "course_offerings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20180228002934) do
     t.integer "other_count"
     t.index ["course_offering_uuid"], name: "index_grade_distributions_on_course_offering_uuid"
     t.index ["section_number"], name: "index_grade_distributions_on_section_number"
+  end
+
+  create_table "identities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.string "provider"
+    t.string "uid"
+    t.string "oauth_token"
+    t.datetime "oauth_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
   create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -112,4 +123,12 @@ ActiveRecord::Schema.define(version: 20180228002934) do
     t.index ["section_uuid"], name: "index_teachings_on_section_uuid"
   end
 
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "identities", "users"
 end
