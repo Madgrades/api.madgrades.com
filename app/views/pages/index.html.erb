@@ -1,4 +1,36 @@
-<h1>Pages#index</h1>
-<p>Find me in app/views/pages/index.html.erb</p>
+<h1>Madgrades API</h1>
 
-<%= current_user.to_json %>
+<% if current_user %>
+  <p>
+    Signed in as <%= current_user.name %>
+    (<%= link_to 'Sign out', signout_path, id: 'sign_out' %>)
+  </p>
+
+  <p>
+    <strong>Connected accounts:</strong>
+  </p>
+  <ul>
+    <% current_user.identities.each do |identity| %>
+      <li>
+        <%= identity.provider_name %>
+        <% if current_user.identities.size > 1 %>
+          (<%= link_to 'Remove', disconnect_provider_url(identity.provider) %>)
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <p>
+    <strong>API Token: </strong>
+    <%= current_user.api_token %>
+    (<%= link_to 'Regenerate', regenerate_api_token_path %>)
+  </p>
+
+  <p>
+    <strong>Example:</strong>
+  </p>
+  <pre style="background-color: #f3f3f3; padding: 15px;">curl -H "Authorization: Token token=<%= current_user.api_token %>" <%= courses_url %></pre>
+<% else %>
+  <%= link_to 'Sign in with Google', '/auth/google_oauth2' %>
+  <%= link_to 'Sign in with Github', '/auth/github' %>
+<% end %>

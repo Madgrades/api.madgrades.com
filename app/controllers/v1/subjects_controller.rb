@@ -1,4 +1,4 @@
-class Api::SubjectsController < ApiController
+class V1::SubjectsController < ApiController
   before_action :set_subject, only: [:show, :courses]
 
   def index
@@ -15,7 +15,7 @@ class Api::SubjectsController < ApiController
 
   def courses
     @courses = @subject.courses.page(params[:page]).per(params[:per_page])
-    render 'courses/index'
+    render 'v1/courses/index'
   end
 
   private

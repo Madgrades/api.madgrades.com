@@ -1,4 +1,4 @@
-class Api::CoursesController < ApiController
+class V1::CoursesController < ApiController
   def index
     @courses = Course.all.page(params[:page]).per(params[:per_page])
   end

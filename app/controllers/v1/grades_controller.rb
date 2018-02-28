@@ -1,4 +1,4 @@
-class Api::GradesController < ApiController
+class V1::GradesController < ApiController
   def course
     course = Course.find(params[:id])
     all = GradeDistribution

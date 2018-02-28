@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228071257) do
+ActiveRecord::Schema.define(version: 20180228184159) do
 
   create_table "course_offerings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uuid"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20180228071257) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "api_token"
   end
 
   add_foreign_key "identities", "users"

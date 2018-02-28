@@ -7,7 +7,18 @@ class Identity < ApplicationRecord
 
   def self.create_with_omniauth(auth)
     create(provider: auth.provider,
-           uid: auth.uuid,
+           uid: auth.uid,
            oauth_token: auth.credentials.token)
+  end
+
+  def provider_name
+    case provider
+      when 'github'
+        return 'GitHub'
+      when 'google_oauth2'
+        return 'Google'
+      else
+        return provider
+    end
   end
 end
