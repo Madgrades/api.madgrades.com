@@ -27,13 +27,24 @@ class Course < ApplicationRecord
         .distinct
   end
 
+  def subjects
+    Subject
+        .joins('JOIN subject_memberships ON subject_memberships.subject_code = subjects.code')
+        .joins('JOIN course_offerings ON course_offerings.uuid = subject_memberships.course_offering_uuid')
+        .where('course_offerings.course_uuid = ?', uuid)
+        .distinct
+  end
+
   def names
     course_offerings.map(&:name).uniq
   end
 
-  def subjects
-    # todo: have a separate table for subjects
-    subject_memberships.map(&:subject_code).uniq
+  def subject_names
+    subjects.map(&:name)
+  end
+
+  def subject_codes
+    subjects.map(&:code)
   end
 
   def course_offerings
