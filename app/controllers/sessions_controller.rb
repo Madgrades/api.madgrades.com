@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
         # The identity we found had a user associated with it so let's
         # just log them in here
         self.current_user = @identity.user
+        current_user.update_with_omniauth(auth.info)
         redirect_to :root, notice: 'Signed in!'
       else
         # Find existing, but not-logged in user by auth info
