@@ -27,7 +27,7 @@ class Course < ApplicationRecord
   def search_data
     {
         subjects: subject_names.join(' '),
-        full_name: "#{subject_names.join(' ')} #{number} #{names.join(' ')}"
+        full_name: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')} #{number} #{names.join(' ')}"
     }
   end
 
@@ -46,6 +46,10 @@ class Course < ApplicationRecord
         .distinct
   end
 
+  def subject_initials
+    subject_names.map { |name| name.split(' ').collect { |s| s[0] }.join('') }
+  end
+
   def names
     course_offerings.map(&:name).uniq
   end
@@ -56,6 +60,10 @@ class Course < ApplicationRecord
 
   def subject_codes
     subjects.map(&:code)
+  end
+
+  def subject_abbrevs
+    subjects.map(&:abbreviation)
   end
 
   def course_offerings
