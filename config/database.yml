@@ -51,4 +51,4 @@ production:
   <<: *default
   database: madgrades
   username: root
-  password: <%= ENV['MADGRADES_DATABASE_PASSWORD'] %>
+  password: password
