@@ -9,6 +9,14 @@ class GradeDistribution < ApplicationRecord
     res
   end
 
+  def self.grade_fields(include_misc=false)
+    fields = %w(a_count ab_count b_count bc_count c_count d_count f_count)
+    if include_misc
+      fields = fields + %w(s_count u_count cr_count n_count p_count i_count nw_count nr_count other_count)
+    end
+    fields
+  end
+
   def +(other)
     res = GradeDistribution.new
     attributes.each_pair do |name, value|

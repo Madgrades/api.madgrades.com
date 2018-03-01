@@ -1,11 +1,7 @@
 class V1::GradesController < ApiController
   def course
     course = Course.find(params[:id])
-    all = GradeDistribution
-               .joins('JOIN course_offerings ON grade_distributions.course_offering_uuid = course_offerings.uuid')
-               .joins('JOIN courses ON course_offerings.course_uuid = courses.uuid')
-               .where('courses.uuid = ?', course.uuid)
-              .distinct
+    all = CourseOfferingGradeDist.where(course_uuid: course.uuid)
     render_all(all)
   end
 
@@ -53,7 +49,9 @@ class V1::GradesController < ApiController
         curr = {}
         curr['term_code'] = grade_dist.term_code
         curr['cumulative'] = GradeDistribution.zero
-        curr['sections'] = []
+        if grade_dist.has_attribute?('section_number')
+          curr['sections'] = []
+        end
         added_already = false
 
         @course_offerings.each do |term|
@@ -64,7 +62,9 @@ class V1::GradesController < ApiController
         end
 
         curr['cumulative'] = curr['cumulative'] + grade_dist
-        curr['sections'].push(grade_dist)
+        if grade_dist.has_attribute?('section_number')
+          curr['sections'].push(grade_dist)
+        end
 
         @course_offerings.push(curr) unless added_already
       end

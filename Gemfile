@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
+gem 'rufus-scheduler'
 gem 'dotenv'
 gem 'dotenv-rails'
 gem 'rack-cors'

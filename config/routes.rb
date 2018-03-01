@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   namespace :v1, as: '' do
     root to: 'pages#index'
 
+    get 'terms', to: 'terms#index', as: :terms
+
     get 'courses/search', to: 'courses#search', as: :courses_search
     get 'courses/:id/grades', to: 'grades#course', as: :course_grades
     resources :courses, only: [:index, :show]

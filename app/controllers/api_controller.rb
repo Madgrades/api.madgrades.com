@@ -7,7 +7,6 @@ class ApiController < ActionController::Base
     end
 
     def require_auth
-      Rails.logger.debug(response.headers)
       return true if authenticate
       render json: {error: 'Unauthorized'}, status: 401
     end
