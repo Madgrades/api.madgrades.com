@@ -5,7 +5,12 @@ class Course < ApplicationRecord
       %w(ii 2 two),
       %w(iii 3 three),
       %w(iv 4 four),
-      %w(v 5 five)
+      %w(v 5 five),
+      %w(vi 6 six),
+      %w(vii 7 seven),
+      %w(viii 8 eight),
+      %w(ix 9 nine),
+      %w(x 10 ten)
   ]
 
   default_scope { order(number: :asc) }
