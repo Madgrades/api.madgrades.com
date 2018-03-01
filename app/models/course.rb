@@ -1,6 +1,12 @@
 class Course < ApplicationRecord
   self.primary_key = :uuid
-  searchkick word_start: [:name, :full_name]
+  searchkick word_start: [:name, :full_name], synonyms: [
+      %w(i 1 one),
+      %w(ii 2 two),
+      %w(iii 3 three),
+      %w(iv 4 four),
+      %w(v 5 five)
+  ]
 
   default_scope { order(number: :asc) }
 
