@@ -8,18 +8,17 @@ end
 gem 'rufus-scheduler'
 gem 'dotenv'
 gem 'dotenv-rails'
-gem 'rack-cors'
 
+# api auth
 gem 'omniauth'
-
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
+# api
 gem 'searchkick'
-
 gem 'kaminari'
-
 gem 'jbuilder'
+gem 'rack-cors'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'

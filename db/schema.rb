@@ -10,51 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180301205528) do
-
-  create_table "course_offering_grade_distribution", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "course_uuid"
-    t.integer "term_code"
-    t.integer "a_count"
-    t.integer "ab_count"
-    t.integer "b_count"
-    t.integer "bc_count"
-    t.integer "c_count"
-    t.integer "d_count"
-    t.integer "f_count"
-    t.integer "s_count"
-    t.integer "u_count"
-    t.integer "cr_count"
-    t.integer "n_count"
-    t.integer "p_count"
-    t.integer "i_count"
-    t.integer "nw_count"
-    t.integer "nr_count"
-    t.integer "other_count"
-  end
-
-  create_table "course_offering_grade_distributions", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "course_uuid"
-    t.integer "term_code"
-    t.integer "a_count"
-    t.integer "ab_count"
-    t.integer "b_count"
-    t.integer "bc_count"
-    t.integer "c_count"
-    t.integer "d_count"
-    t.integer "f_count"
-    t.integer "s_count"
-    t.integer "u_count"
-    t.integer "cr_count"
-    t.integer "n_count"
-    t.integer "p_count"
-    t.integer "i_count"
-    t.integer "nw_count"
-    t.integer "nr_count"
-    t.integer "other_count"
-    t.index ["course_uuid"], name: "index_course_offering_grade_distributions_on_course_uuid"
-    t.index ["term_code"], name: "index_course_offering_grade_distributions_on_term_code"
-  end
+ActiveRecord::Schema.define(version: 20180304215205) do
 
   create_table "course_offering_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_uuid"
@@ -87,6 +43,17 @@ ActiveRecord::Schema.define(version: 20180301205528) do
     t.string "name"
     t.index ["course_uuid"], name: "index_course_offerings_on_course_uuid"
     t.index ["uuid"], name: "index_course_offerings_on_uuid", unique: true
+  end
+
+  create_table "course_trends", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "course_uuid"
+    t.integer "first_count"
+    t.integer "last_count"
+    t.decimal "first_gpa", precision: 5, scale: 4
+    t.decimal "last_gpa", precision: 5, scale: 4
+    t.integer "first_term"
+    t.integer "last_term"
+    t.string "duration"
   end
 
   create_table "courses", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
