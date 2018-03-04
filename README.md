@@ -21,6 +21,9 @@ $ cat *.sql | mysql -p -u <username> madgrades_dev
 
 This can take a long time (5+ minutes, longer on slower computers). Alternatively, you can export the data to CSV files and import using tools/methods that you prefer.
 
+> *Note:* In order to import large SQL dumps, you may have to tune up your SQL server settings or else you may get an error like: `MySQL server has gone away`. Set `max_allowed_packet = 1G` _temporarily_ in your `mysqld.conf` or `my.cnf` depending on your operating system. It is dangerous to keep this setting, so revert it back to ~16M once imported.
+
+
 ## API Authentication
 
 You will notice that inside `config/initializers/omniauth.rb` there are two providers listed: Google and Github. To support both you must create your own developer applications on both of these services and put them in your environment variables before executing the app. When creating your application, it is only important that your callback is listed as:
