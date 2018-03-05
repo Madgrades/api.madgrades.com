@@ -6,10 +6,11 @@ class Subject < ApplicationRecord
   default_scope { order(code: :asc) }
 
   def self.search_with_page(query, page, per_page)
-    per_page = [per_page || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
+    per_pages = [Kaminari.config.default_per_page, Kaminari.config.max_per_page]
+    per_pages.push(per_page.to_i) if per_page.present?
     Subject.search(query,
                   page: page,
-                  per_page: per_page,
+                  per_page: per_pages.min,
                   match: :word_start,
                   fields: [:code, :name, :abbreviation])
   end

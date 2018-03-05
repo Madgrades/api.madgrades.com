@@ -2,20 +2,14 @@ class V1::SubjectsController < ApiController
   before_action :set_subject, only: [:show, :courses]
 
   def index
-    @subjects = Subject.all.page(params[:page]).per(params[:per_page])
-  end
-
-  def search
-    @subjects = Subject.search_with_page(params[:query], params[:page], params[:per_page])
-    render :index
+    if params[:query].present?
+      @subjects = Subject.search_with_page(params[:query], params[:page], params[:per_page])
+    else
+      @subjects = Subject.all.page(params[:page]).per(params[:per_page])
+    end
   end
 
   def show
-  end
-
-  def courses
-    @courses = @subject.courses.page(params[:page]).per(params[:per_page])
-    render 'v1/courses/index'
   end
 
   private
