@@ -53,7 +53,7 @@ class V1::CoursesController < ApiController
       @courses = Course.order("name #{order}")
     elsif sort == 'number'
       @courses = Course.order("number #{order}")
-    else
+    elsif sort == 'relevance' || true
       @courses = Course
       sorted = false
     end
@@ -111,10 +111,5 @@ class V1::CoursesController < ApiController
 
   def show
     @course = Course.find(params[:id])
-  end
-
-  def search
-    @courses = Course.search_with_page(params[:query], params[:page], params[:per_page])
-    render :index
   end
 end
