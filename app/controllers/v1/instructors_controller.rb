@@ -12,8 +12,4 @@ class V1::InstructorsController < ApiController
   def show
     @instructor = Instructor.find(params[:id])
   end
-
-  def search
-    render :index
-  end
 end
