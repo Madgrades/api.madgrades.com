@@ -13,12 +13,13 @@ class Course < ApplicationRecord
       %w(x 10 ten)
   ]
 
-  def self.search_with_page(query, page, per_page)
+  def self.search_with_page(query, page, per_page, where={})
     per_page = [per_page || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
     Course.search(query,
                   page: page,
                   per_page: per_page,
                   match: :word_start,
+                  where: where,
                   fields: [:full_name, :subjects])
   end
 
