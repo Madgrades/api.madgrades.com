@@ -6,7 +6,7 @@ class Instructor < ApplicationRecord
 
   def self.search_with_page(query, page, per_page)
     per_pages = [Kaminari.config.default_per_page, Kaminari.config.max_per_page]
-    per_pages.push(per_page) if per_page.present?
+    per_pages.push(per_page.to_i) if per_page.present?
     Instructor.search(query,
                   page: page,
                   per_page: per_pages.min,
