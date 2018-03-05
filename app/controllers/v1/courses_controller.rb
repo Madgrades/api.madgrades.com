@@ -46,8 +46,10 @@ class V1::CoursesController < ApiController
       @courses = @courses.where("last_count > 50 AND last_term > #{earliest_allowed} AND last_term - first_term > 2")
     elsif sort == 'name'
       @courses = Course.order("name #{order}")
-    else
+    elsif sort == 'number'
       @courses = Course.order("number #{order}")
+    else
+      @courses = Course
     end
 
     # TODO: Untested, needed searchkick backend to test

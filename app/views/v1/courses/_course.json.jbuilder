@@ -1,4 +1,6 @@
-json.extract! course, :uuid, :number, :names
+json.extract! course, :uuid, :number
+json.name course.name
+json.names course.names
 json.trends do
   if course.trend('all').nil?
     json.all nil

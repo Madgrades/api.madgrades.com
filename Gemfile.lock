@@ -70,6 +70,7 @@ GEM
     erubi (1.7.0)
     et-orbi (1.0.5)
       tzinfo
+    execjs (2.7.0)
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.22)
@@ -94,6 +95,7 @@ GEM
       activerecord
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
+    libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -162,6 +164,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    ref (2.0.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     rufus-scheduler (3.4.2)
@@ -196,11 +199,16 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    uglifier (4.1.6)
+      execjs (>= 0.3.0, < 3)
     web-console (3.5.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -237,7 +245,9 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
+  therubyracer
   tzinfo-data
+  uglifier
   web-console (>= 3.3.0)
 
 BUNDLED WITH
