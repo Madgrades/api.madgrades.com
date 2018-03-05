@@ -27,6 +27,9 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
+gem 'sass'
+gem 'sass-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
