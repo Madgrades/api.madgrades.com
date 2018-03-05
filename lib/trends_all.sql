@@ -18,15 +18,20 @@ SELECT
 FROM courses
 JOIN course_offering_grade_dists first ON
   first.course_uuid = courses.uuid AND
-  first.term_code IN (
-    SELECT MIN(c.term_code)
+  first.term_code >= (
+    SELECT MIN(c.term_code) - 8
+    FROM course_offering_grade_dists c
+    WHERE c.course_uuid = first.course_uuid
+  ) AND
+  first.term_code <= (
+    SELECT MIN(c.term_code) + 8
     FROM course_offering_grade_dists c
     WHERE c.course_uuid = first.course_uuid
   )
 JOIN course_offering_grade_dists last ON
   last.course_uuid = courses.uuid AND
-  last.term_code IN (
-    SELECT MAX(term_code)
+  last.term_code > (
+    SELECT MAX(c.term_code) - 8
     FROM course_offering_grade_dists c
     WHERE c.course_uuid = last.course_uuid
   )

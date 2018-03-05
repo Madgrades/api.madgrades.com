@@ -1,6 +1,72 @@
 class V1::CoursesController < ApiController
   def index
-    @courses = Course.all.page(params[:page]).per(params[:per_page])
+    sort = params[:sort]
+    order = (params[:order] || '').upcase!
+    subject = params[:subject]
+    instructor = params[:instructor]
+    query = params[:query]
+
+    unless %w(ASC DESC).include?(order)
+      order = 'DESC'
+    end
+
+    @courses = Course
+
+    if %w(trending_recent trending_all trending_gpa_recent trending_gpa_all).include?(sort)
+      @courses = Course.joins('JOIN course_trends ON course_trends.course_uuid = courses.uuid')
+
+      if sort == 'trending_recent'
+        @courses = @courses
+                       .where("course_trends.duration = 'recent'")
+                       .order("(last_count - first_count) / (last_term - first_term) #{order}")
+      elsif sort == 'trending_all'
+        @courses = @courses
+                       .where("course_trends.duration = 'all'")
+                       .order("(last_count - first_count) / (last_term - first_term) #{order}")
+      elsif sort == 'trending_gpa_recent'
+        @courses = @courses
+                       .where("course_trends.duration = 'recent'")
+                       .order("(last_gpa - first_gpa) / (last_term - first_term) #{order}")
+      elsif sort == 'trending_gpa_all'
+        @courses = @courses
+                       .where("course_trends.duration = 'all'")
+                       .order("(last_gpa - first_gpa) / (last_term - first_term) #{order}")
+      else
+        raise 'cant happen'
+      end
+
+      # prevents tiny 1-5 people courses and courses taught too long ago from trending
+      earliest_allowed = -15 + CourseOffering
+                          .select(:term_code)
+                          .order(term_code: :desc)
+                          .limit(1)
+                          .first
+                          .term_code
+      @courses = @courses.where("last_count > 50 AND last_term > #{earliest_allowed} AND last_term - first_term > 2")
+    else
+      @courses = @courses.order(:number)
+    end
+
+    # TODO: Untested, needed searchkick backend to test
+    if query.present?
+      uuids = Course.select(:uuid).search_without_page(query).map(&:uuid)
+      @courses = @courses.where(uuid: uuids)
+    end
+
+    if subject.present?
+      subjects = Subject.where(code: subject.split(','))
+      course_uuids = subjects.collect {|s| s.courses}.flatten.map {|c| c.uuid}
+      @courses = @courses.where(uuid: course_uuids)
+    end
+
+    if instructor.present?
+      instructors = Instructor.where(id: instructor.split(','))
+      course_uuids = instructors.collect {|i| i.courses}.flatten.map {|c| c.uuid}
+      @courses = @courses.where(uuid: course_uuids)
+    end
+
+    @courses = @courses.page(params[:page]).per(params[:per_page])
+    # render json: @courses.to_sql
   end
 
   def show

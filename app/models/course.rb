@@ -13,8 +13,6 @@ class Course < ApplicationRecord
       %w(x 10 ten)
   ]
 
-  default_scope { order(number: :asc) }
-
   def self.search_with_page(query, page, per_page)
     per_page = [per_page || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
     Course.search(query,
@@ -22,6 +20,16 @@ class Course < ApplicationRecord
                   per_page: per_page,
                   match: :word_start,
                   fields: [:full_name, :subjects])
+  end
+
+  def self.search_without_page(query)
+    Course.search(query,
+                  match: :word_start,
+                  fields: [:full_name, :subjects])
+  end
+
+  def trend(duration)
+    CourseTrend.where(course_uuid: uuid, duration: duration).first
   end
 
   def search_data

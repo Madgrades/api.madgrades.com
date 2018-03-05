@@ -27,4 +27,13 @@ class Instructor < ApplicationRecord
   def sections
     Section.where('uuid IN (?)', teachings.map(&:section_uuid))
   end
+
+  def courses
+    Course
+        .joins('JOIN course_offerings ON course_offerings.course_uuid = courses.uuid')
+        .joins('JOIN sections ON sections.course_offering_uuid = course_offerings.uuid')
+        .joins('JOIN teachings ON teachings.section_uuid = sections.uuid')
+        .where('teachings.instructor_id = ?', id)
+        .distinct
+  end
 end
