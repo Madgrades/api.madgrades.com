@@ -6,10 +6,11 @@ class Instructor < ApplicationRecord
 
 
   def self.search_with_page(query, page, per_page)
-    per_page = [per_page.to_i || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
+    per_pages = [Kaminari.config.default_per_page, Kaminari.config.max_per_page]
+    per_pages.push(per_page)
     Instructor.search(query,
                   page: page,
-                  per_page: per_page,
+                  per_page: per_pages.min,
                   match: :word_start,
                   fields: [:name])
   end
