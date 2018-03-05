@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304215205) do
+ActiveRecord::Schema.define(version: 20180305034345) do
 
   create_table "course_offering_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_uuid"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180304215205) do
     t.integer "term_code"
     t.string "name"
     t.index ["course_uuid"], name: "index_course_offerings_on_course_uuid"
+    t.index ["term_code"], name: "index_course_offerings_on_term_code"
     t.index ["uuid"], name: "index_course_offerings_on_uuid", unique: true
   end
 
@@ -54,6 +55,8 @@ ActiveRecord::Schema.define(version: 20180304215205) do
     t.integer "first_term"
     t.integer "last_term"
     t.string "duration"
+    t.index ["course_uuid"], name: "index_course_trends_on_course_uuid"
+    t.index ["duration"], name: "index_course_trends_on_duration"
   end
 
   create_table "courses", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

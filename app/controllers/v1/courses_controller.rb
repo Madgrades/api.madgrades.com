@@ -14,7 +14,6 @@ class V1::CoursesController < ApiController
       order = 'DESC'
     end
 
-
     sorted = true
 
     # if the user uses these sorting methods, we have a special query
@@ -43,9 +42,7 @@ class V1::CoursesController < ApiController
 
       # prevents tiny 1-5 people courses and courses taught too long ago from trending
       earliest_allowed = -15 + CourseOffering
-                          .select(:term_code)
-                          .order(term_code: :desc)
-                          .limit(1)
+                          .select('MAX(term_code) as term_code')
                           .first
                           .term_code
       @courses = @courses.where("last_count > 50 AND last_term > #{earliest_allowed} AND last_term - first_term > 2")
