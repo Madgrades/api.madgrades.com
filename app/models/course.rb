@@ -14,7 +14,7 @@ class Course < ApplicationRecord
   ]
 
   def self.search_with_page(query, page, per_page, where={})
-    per_page = [per_page || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
+    per_page = [per_page.to_i || Kaminari.config.default_per_page, Kaminari.config.max_per_page].min
     Course.search(query,
                   page: page,
                   per_page: per_page,
