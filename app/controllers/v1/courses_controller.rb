@@ -14,6 +14,9 @@ class V1::CoursesController < ApiController
       order = 'DESC'
     end
 
+
+    sorted = true
+
     # if the user uses these sorting methods, we have a special query
     if %w(trending_recent trending_all trending_gpa_recent trending_gpa_all).include?(sort)
       @courses = Course.joins('JOIN course_trends ON course_trends.course_uuid = courses.uuid')
@@ -52,6 +55,7 @@ class V1::CoursesController < ApiController
       @courses = Course.order("number #{order}")
     else
       @courses = Course
+      sorted = false
     end
 
     filters = {}
@@ -84,7 +88,7 @@ class V1::CoursesController < ApiController
 
     # TODO: Untested, needed searchkick backend to test
     if query.present?
-      if sort.present?
+      if sorted
         search_results = Course.search_without_page(query).map(&:uuid)
         if filters.include?('uuid')
           filters['uuid'] += search_results
