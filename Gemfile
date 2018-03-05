@@ -27,6 +27,8 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
+gem 'therubyracer'
+gem 'uglifier'
 gem 'sass'
 gem 'sass-rails'
 
