@@ -75,7 +75,7 @@ class V1::CoursesController < ApiController
       course_uuids = instructors.collect {|i| i.courses}.flatten.map {|c| c.uuid}
 
       if filters.include?('uuid')
-        filters['uuid'] += course_uuids
+        filters['uuid'] &= course_uuids
       else
         filters['uuid'] = course_uuids
       end
@@ -88,7 +88,7 @@ class V1::CoursesController < ApiController
       if sorted
         search_results = Course.search_without_page(query).map(&:uuid)
         if filters.include?('uuid')
-          filters['uuid'] += search_results
+          filters['uuid'] &= search_results
         else
           filters['uuid'] = search_results
         end
