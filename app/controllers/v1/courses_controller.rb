@@ -11,7 +11,7 @@ class V1::CoursesController < ApiController
 
     # ensure order is strictly ASC or DESC
     unless %w(ASC DESC).include?(order)
-      order = 'DESC'
+      order = 'ASC'
     end
 
     sorted = true

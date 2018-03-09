@@ -1,6 +1,6 @@
 class Course < ApplicationRecord
   self.primary_key = :uuid
-  searchkick word_start: [:names, :subjects], synonyms: [
+  searchkick synonyms: [
       %w(i 1 one),
       %w(ii 2 two),
       %w(iii 3 three),
@@ -19,15 +19,12 @@ class Course < ApplicationRecord
     Course.search(query,
                   page: page,
                   per_page: per_pages.min,
-                  match: :word_start,
                   where: where,
-                  fields: [:names, :subjects])
+                  misspellings: {below: 5})
   end
 
   def self.search_without_page(query)
-    Course.search(query,
-                  match: :word_start,
-                  fields: [:names, :subjects])
+    Course.search(query, misspellings: {below: 5})
   end
 
   def change(duration)
