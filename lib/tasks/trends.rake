@@ -1,6 +1,6 @@
 task trends: :environment do
   puts 'Populating trends...'
-  if CourseTrend.populate!
+  if CourseChange.populate!
     puts 'Done!'
   else
     puts 'Please run rake grades:courses before this task.'

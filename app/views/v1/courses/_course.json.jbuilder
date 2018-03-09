@@ -1,19 +1,19 @@
 json.extract! course, :uuid, :number
 json.name course.name
 json.names course.names
-json.trends do
-  if course.trend('all').nil?
+json.changes do
+  if course.change('all').nil?
     json.all nil
   else
     json.all do
-      json.partial! 'v1/course_trends/course_trend', course_trend: course.trend('all')
+      json.partial! 'v1/course_changes/course_change', course_change: course.change('all')
     end
   end
-  if course.trend('recent').nil?
+  if course.change('recent').nil?
     json.recent nil
   else
     json.recent do
-      json.partial! 'v1/course_trends/course_trend', course_trend: course.trend('recent')
+      json.partial! 'v1/course_changes/course_change', course_change: course.change('recent')
     end
   end
 end

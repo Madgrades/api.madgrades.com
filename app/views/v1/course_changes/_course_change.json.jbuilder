@@ -1,0 +1,2 @@
+json.count_change course_change.count_change.to_f
+json.gpa_change course_change.gpa_change.to_f

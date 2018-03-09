@@ -18,34 +18,32 @@ class V1::CoursesController < ApiController
 
     # if the user uses these sorting methods, we have a special query
     if %w(trending_recent trending_all trending_gpa_recent trending_gpa_all).include?(sort)
-      @courses = Course.joins('JOIN course_trends ON course_trends.course_uuid = courses.uuid')
+      @courses = Course.joins('JOIN course_changes ON course_changes.course_uuid = courses.uuid')
 
       if sort == 'trending_recent'
         @courses = @courses
-                       .where("course_trends.duration = 'recent'")
-                       .order("(last_count - first_count) / (last_term - first_term) #{order}")
+                       .where("course_changes.duration = 'recent'")
+                       .order("count_change #{order}")
       elsif sort == 'trending_all'
         @courses = @courses
-                       .where("course_trends.duration = 'all'")
-                       .order("(last_count - first_count) / (last_term - first_term) #{order}")
+                       .where("course_changes.duration = 'all'")
+                       .order("count_change #{order}")
       elsif sort == 'trending_gpa_recent'
         @courses = @courses
-                       .where("course_trends.duration = 'recent'")
-                       .order("(last_gpa - first_gpa) / (last_term - first_term) #{order}")
+                       .where("course_changes.duration = 'recent'")
+                       .order("gpa_change #{order}")
       elsif sort == 'trending_gpa_all'
         @courses = @courses
-                       .where("course_trends.duration = 'all'")
-                       .order("(last_gpa - first_gpa) / (last_term - first_term) #{order}")
-      else
-        raise 'cant happen'
+                       .where("course_changes.duration = 'all'")
+                       .order("gpa_change #{order}")
       end
 
-      # prevents tiny 1-5 people courses and courses taught too long ago from trending
-      earliest_allowed = -15 + CourseOffering
-                          .select('MAX(term_code) as term_code')
-                          .first
-                          .term_code
-      @courses = @courses.where("last_count > 50 AND last_term > #{earliest_allowed} AND last_term - first_term > 2")
+      # # prevents tiny 1-5 people courses and courses taught too long ago from trending
+      # earliest_allowed = -15 + CourseOffering
+      #                     .select('MAX(term_code) as term_code')
+      #                     .first
+      #                     .term_code
+      # @courses = @courses.where("last_count > 50 AND last_term > #{earliest_allowed} AND last_term - first_term > 2")
     elsif sort == 'name'
       @courses = Course.order("name #{order}")
     elsif sort == 'number'

@@ -1,6 +1,6 @@
 class Course < ApplicationRecord
   self.primary_key = :uuid
-  searchkick word_start: [:name, :full_name], synonyms: [
+  searchkick word_start: [:names, :subjects], synonyms: [
       %w(i 1 one),
       %w(ii 2 two),
       %w(iii 3 three),
@@ -21,23 +21,23 @@ class Course < ApplicationRecord
                   per_page: per_pages.min,
                   match: :word_start,
                   where: where,
-                  fields: [:full_name, :subjects])
+                  fields: [:names, :subjects])
   end
 
   def self.search_without_page(query)
     Course.search(query,
                   match: :word_start,
-                  fields: [:full_name, :subjects])
+                  fields: [:names, :subjects])
   end
 
-  def trend(duration)
-    CourseTrend.where(course_uuid: uuid, duration: duration).first
+  def change(duration)
+    CourseChange.where(course_uuid: uuid, duration: duration).first
   end
 
   def search_data
     {
-        subjects: subject_names.join(' '),
-        full_name: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')} #{number} #{names.join(' ')}"
+        subjects: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')}",
+        names: "#{names.join(' ')} #{number}"
     }
   end
 
