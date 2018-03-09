@@ -59,7 +59,7 @@ class Course < ApplicationRecord
   end
 
   def names
-    course_offerings.map(&:name).uniq
+    offerings.map(&:name).uniq
   end
 
   def subject_names
@@ -74,7 +74,7 @@ class Course < ApplicationRecord
     subjects.map(&:abbreviation)
   end
 
-  def course_offerings
+  def offerings
     CourseOffering.where(course_uuid: uuid)
   end
 

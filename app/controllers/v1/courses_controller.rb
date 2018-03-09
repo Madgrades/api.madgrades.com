@@ -110,28 +110,34 @@ class V1::CoursesController < ApiController
 
   def grades
     @course = Course.find(params[:id])
-    @grade_distributions = CourseOfferingGradeDist
-                               .where(course_uuid: @course.uuid)
-                               .order(term_code: :desc)
+    course_offering_uuids = @course.offerings.map(&:uuid)
+    @grade_distributions = GradeDistribution.select('instructor_id, grade_distributions.*')
+                               .joins('JOIN sections ON sections.number = grade_distributions.section_number AND sections.course_offering_uuid = grade_distributions.course_offering_uuid')
+                               .joins('JOIN teachings ON teachings.section_uuid = sections.uuid')
+                               .where(course_offering_uuid: course_offering_uuids)
+                               .distinct
+
     @cumulative = @grade_distributions.inject(GradeDistribution.zero) {|x, y| x + y}
 
-    instructor_dists = InstructorGradeDist
-                           .where(course_uuid: @course.uuid)
-                           .order(term_code: :desc)
-                           .to_a.group_by {|d| d.instructor_id}
+    @grade_distributions = @grade_distributions.to_a.group_by {|d| d.term_code}
 
+    @grade_distributions = @grade_distributions.map do |term_code, section_dists|
+      res = {}
+      res[:term_code] = term_code
+      res[:cumulative] = section_dists.inject(GradeDistribution.zero) {|x, y| x + y}
+      res[:sections] = []
 
-    @instructors = []
-    instructor_dists.each do |id, dists|
-      dists = dists.map do |d|
-        res = d.attributes
-        res[:term_code] = d.term_code
-        res
+      sections = section_dists.group_by {|d| d.section_number}
+      sections.each do |number, dists|
+        dist = {}
+        dist[:grades] = GradeDistribution.zero + dists[0]
+        dist[:section_number] = number
+        dist[:instructors] = dists.map {|d| d.instructor_id}
+        res[:sections].push(dist)
       end
-      dists.sort! {|a,b| b[:term_code] - a[:term_code]}
-      cumulative = dists.inject(GradeDistribution.zero) {|x, y| x + y}
-      instructor = {id: id, cumulative: cumulative, course_offerings: dists}
-      @instructors.push(instructor)
+      res
     end
+
+    @grade_distributions.sort! {|a,b| b[:term_code] - a[:term_code]}
   end
 end

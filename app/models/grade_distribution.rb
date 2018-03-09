@@ -1,7 +1,7 @@
 class GradeDistribution < ApplicationRecord
   def self.zero
     res = GradeDistribution.new
-    res.attributes.each_pair do |name, value|
+    res.attributes.each_pair do |name, _|
       if name.ends_with?('_count')
         res[name] = 0
       end
