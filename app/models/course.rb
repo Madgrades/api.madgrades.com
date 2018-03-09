@@ -34,7 +34,8 @@ class Course < ApplicationRecord
   def search_data
     {
         subjects: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')}",
-        names: "#{names.join(' ')} #{number}"
+        names: "#{names.join(' ')} #{number}",
+        uuid: uuid
     }
   end
 
