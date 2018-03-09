@@ -115,15 +115,10 @@ class V1::CoursesController < ApiController
                                .order(term_code: :desc)
     @cumulative = @grade_distributions.inject(GradeDistribution.zero) {|x, y| x + y}
 
-    instructor_dists = Instructor.select('instructors.id, course_offerings.term_code, grade_distributions.*')
-                       .joins('JOIN teachings ON teachings.instructor_id = instructors.id')
-                       .joins('JOIN sections ON sections.uuid = teachings.section_uuid')
-                       .joins('JOIN course_offerings ON course_offerings.uuid = sections.course_offering_uuid')
-                       .joins('JOIN grade_distributions ON grade_distributions.course_offering_uuid = course_offerings.uuid')
-                       .where('course_offerings.course_uuid = ?', @course.uuid)
-                       .distinct
-                       .to_a
-                       .group_by {|dist| dist.id}
+    instructor_dists = InstructorGradeDist
+                           .where(course_uuid: @course.uuid)
+                           .order(term_code: :desc)
+                           .to_a.group_by {|d| d.instructor_id}
 
 
     @instructors = []

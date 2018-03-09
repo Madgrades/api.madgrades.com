@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308202831) do
+ActiveRecord::Schema.define(version: 20180309055144) do
 
   create_table "course_changes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_uuid"
@@ -92,6 +92,31 @@ ActiveRecord::Schema.define(version: 20180308202831) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_identities_on_user_id"
+  end
+
+  create_table "instructor_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "course_uuid"
+    t.integer "instructor_id"
+    t.integer "term_code"
+    t.integer "a_count"
+    t.integer "ab_count"
+    t.integer "b_count"
+    t.integer "bc_count"
+    t.integer "c_count"
+    t.integer "d_count"
+    t.integer "f_count"
+    t.integer "s_count"
+    t.integer "u_count"
+    t.integer "cr_count"
+    t.integer "n_count"
+    t.integer "p_count"
+    t.integer "i_count"
+    t.integer "nw_count"
+    t.integer "nr_count"
+    t.integer "other_count"
+    t.index ["course_uuid"], name: "index_instructor_grade_dists_on_course_uuid"
+    t.index ["instructor_id"], name: "index_instructor_grade_dists_on_instructor_id"
+    t.index ["term_code"], name: "index_instructor_grade_dists_on_term_code"
   end
 
   create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
