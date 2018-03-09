@@ -49,9 +49,6 @@ class V1::GradesController < ApiController
         curr = {}
         curr['term_code'] = grade_dist.term_code
         curr['cumulative'] = GradeDistribution.zero
-        if grade_dist.has_attribute?('section_number')
-          curr['sections'] = []
-        end
         added_already = false
 
         @course_offerings.each do |term|
@@ -62,15 +59,14 @@ class V1::GradesController < ApiController
         end
 
         curr['cumulative'] = curr['cumulative'] + grade_dist
-        if grade_dist.has_attribute?('section_number')
-          curr['sections'].push(grade_dist)
-        end
 
         @course_offerings.push(curr) unless added_already
       end
 
       # sort by term code descending, recent first
       @course_offerings.sort!{ |a, b| b['term_code'] - a['term_code'] }
+
+
 
       # we start the summation with a non-term-affiliated grade distribution, zero
       @grade_distribution = ([GradeDistribution.zero] + all).to_a.sum

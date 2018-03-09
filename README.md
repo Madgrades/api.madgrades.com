@@ -4,7 +4,12 @@ A REST interface for UW Madison course data, powered by Rails. This README is fo
 
 ## Usage
 
-1. Install ruby 2.5, and `gem install bundler` while in this directory to install necessary gems.
+**Prerequisites:**
+
+* Ruby 2.5+, and bundler gem
+* Elasticsearch 5+ @ `localhost:9200`
+
+1. `gem install bundler`
 2. Setup the `config/database.yml` file to point to a working database.
 3. Run migrations: `rake db:create && rake db:migrate`
 4. Test it out: `rails s` and visit `http://localhost:3000`

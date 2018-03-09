@@ -107,4 +107,36 @@ class V1::CoursesController < ApiController
   def show
     @course = Course.find(params[:id])
   end
+
+  def grades
+    @course = Course.find(params[:id])
+    @grade_distributions = CourseOfferingGradeDist
+                               .where(course_uuid: @course.uuid)
+                               .order(term_code: :desc)
+    @cumulative = @grade_distributions.inject(GradeDistribution.zero) {|x, y| x + y}
+
+    instructor_dists = Instructor.select('instructors.id, course_offerings.term_code, grade_distributions.*')
+                       .joins('JOIN teachings ON teachings.instructor_id = instructors.id')
+                       .joins('JOIN sections ON sections.uuid = teachings.section_uuid')
+                       .joins('JOIN course_offerings ON course_offerings.uuid = sections.course_offering_uuid')
+                       .joins('JOIN grade_distributions ON grade_distributions.course_offering_uuid = course_offerings.uuid')
+                       .where('course_offerings.course_uuid = ?', @course.uuid)
+                       .distinct
+                       .to_a
+                       .group_by {|dist| dist.id}
+
+
+    @instructors = []
+    instructor_dists.each do |id, dists|
+      dists = dists.map do |d|
+        res = d.attributes
+        res[:term_code] = d.term_code
+        res
+      end
+      dists.sort! {|a,b| b[:term_code] - a[:term_code]}
+      cumulative = dists.inject(GradeDistribution.zero) {|x, y| x + y}
+      instructor = {id: id, cumulative: cumulative, courseOfferings: dists}
+      @instructors.push(instructor)
+    end
+  end
 end

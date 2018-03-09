@@ -18,17 +18,14 @@ Rails.application.routes.draw do
 
     get 'terms', to: 'terms#index', as: :terms
 
-    get 'courses/:id/grades', to: 'grades#course', as: :course_grades
+    get 'courses/:id/grades', to: 'courses#grades', as: :course_grades
     resources :courses, only: [:index, :show]
 
     get 'instructors/search', to: 'instructors#search', as: :instructors_search
-    get 'instructors/:id/grades', to: 'grades#instructor', as: :instructor_grades
     resources :instructors, only: [:index, :show]
 
-    get 'course_offerings/:id/grades', to: 'grades#course_offering', as: :course_offering_grades
     resources :course_offerings, only: [:show]
 
-    get 'sections/:id/grades', to: 'grades#section', as: :section_grades
     resources :sections, only: [:show]
 
     resources :subjects, only: [:index, :show]
