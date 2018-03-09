@@ -7,7 +7,7 @@ namespace :grades do
 
   task instructors: :environment do
     puts 'Populating instructor grades...'
-    InstructorGradeDist.populate!
+    Instructor.populate!
     puts 'Done!'
   end
 end

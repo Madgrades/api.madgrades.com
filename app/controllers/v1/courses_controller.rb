@@ -130,7 +130,7 @@ class V1::CoursesController < ApiController
       end
       dists.sort! {|a,b| b[:term_code] - a[:term_code]}
       cumulative = dists.inject(GradeDistribution.zero) {|x, y| x + y}
-      instructor = {id: id, cumulative: cumulative, courseOfferings: dists}
+      instructor = {id: id, cumulative: cumulative, course_offerings: dists}
       @instructors.push(instructor)
     end
   end
