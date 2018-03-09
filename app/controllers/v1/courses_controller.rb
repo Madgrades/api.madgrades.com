@@ -111,9 +111,10 @@ class V1::CoursesController < ApiController
   def grades
     @course = Course.find(params[:id])
     course_offering_uuids = @course.offerings.map(&:uuid)
-    @grade_distributions = GradeDistribution.select('instructor_id, grade_distributions.*')
+    @grade_distributions = GradeDistribution.select('instructors.id AS i_id, instructors.name AS i_name, grade_distributions.*')
                                .joins('JOIN sections ON sections.number = grade_distributions.section_number AND sections.course_offering_uuid = grade_distributions.course_offering_uuid')
                                .joins('JOIN teachings ON teachings.section_uuid = sections.uuid')
+                               .joins('JOIN instructors ON instructors.id = teachings.instructor_id')
                                .where(course_offering_uuid: course_offering_uuids)
                                .distinct
 
@@ -132,7 +133,7 @@ class V1::CoursesController < ApiController
         dist = {}
         dist[:grades] = GradeDistribution.zero + dists[0]
         dist[:section_number] = number
-        dist[:instructors] = dists.map {|d| d.instructor_id}
+        dist[:instructors] = dists.map {|d| {id: d.i_id, name: d.i_name}}
         res[:sections].push(dist)
       end
       res
