@@ -11,7 +11,9 @@ class Instructor < ApplicationRecord
     Instructor.search(query,
                   page: page,
                   per_page: per_pages.min,
-                  misspellings: {below: 5})
+                  misspellings: {below: 5},
+                  match: :word_start,
+                  fields: [:name])
   end
 
   def search_data
