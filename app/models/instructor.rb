@@ -1,4 +1,5 @@
 class Instructor < ApplicationRecord
+  require 'csv'
   self.primary_key = :id
   searchkick word_start: [:name], synonyms: -> { CSV.read("#{Rails.root}/lib/nicknames.csv") }
 
