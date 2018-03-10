@@ -1,6 +1,6 @@
 class Instructor < ApplicationRecord
   self.primary_key = :id
-  searchkick word_start: [:name]
+  searchkick word_start: [:name], synonyms: -> { CSV.read("#{Rails.root}/lib/nicknames.csv") }
 
   default_scope { order(id: :asc) }
 
