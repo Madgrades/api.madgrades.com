@@ -1,17 +1,6 @@
 class Course < ApplicationRecord
   self.primary_key = :uuid
-  searchkick synonyms: [
-      %w(i 1 one),
-      %w(ii 2 two),
-      %w(iii 3 three),
-      %w(iv 4 four),
-      %w(v 5 five),
-      %w(vi 6 six),
-      %w(vii 7 seven),
-      %w(viii 8 eight),
-      %w(ix 9 nine),
-      %w(x 10 ten)
-  ], word_start: [:names, :uuid]
+  searchkick word_start: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
 
   def self.search_with_page(query, page, per_page, where={})
     per_pages = [Kaminari.config.default_per_page, Kaminari.config.max_per_page]
