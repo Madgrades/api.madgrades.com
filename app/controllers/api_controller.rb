@@ -7,8 +7,8 @@ class ApiController < ActionController::Base
     end
 
     def require_auth
-      # return true if authenticate
-      # render json: {error: 'Unauthorized'}, status: 401
+      return true if authenticate
+      render json: {error: 'Unauthorized'}, status: 401
     end
 
     def authenticate
