@@ -20,11 +20,11 @@ class Section < ApplicationRecord
   end
 
   def room
-    Room.find(room_uuid)
+    room_uuid == nil ? nil : Room.find(room_uuid)
   end
 
   def schedule
-    Schedule.find(schedule_uuid)
+    schedule_uuid == nil ? nil : Schedule.find(schedule_uuid)
   end
 
   def instructors
