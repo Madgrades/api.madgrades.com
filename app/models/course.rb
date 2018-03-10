@@ -11,7 +11,7 @@ class Course < ApplicationRecord
       %w(viii 8 eight),
       %w(ix 9 nine),
       %w(x 10 ten)
-  ], word_start: [:names, :subjects, :uuid]
+  ], word_start: [:names, :uuid]
 
   def self.search_with_page(query, page, per_page, where={})
     per_pages = [Kaminari.config.default_per_page, Kaminari.config.max_per_page]
@@ -22,7 +22,7 @@ class Course < ApplicationRecord
                   where: where,
                   misspellings: {below: 5},
                   match: :word_start,
-                  fields: [:names, :subjects, :uuid])
+                  fields: [:names, :uuid])
   end
 
   def self.search_without_page(query)
@@ -35,8 +35,7 @@ class Course < ApplicationRecord
 
   def search_data
     {
-        subjects: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')}",
-        names: "#{names.join(' ')} #{number}",
+        names: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')} #{names.join(' ')} #{number}",
         uuid: uuid
     }
   end
