@@ -1,4 +1,5 @@
 class Course < ApplicationRecord
+  require 'csv'
   self.primary_key = :uuid
   searchkick word_start: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
 
