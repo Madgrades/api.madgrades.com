@@ -199,6 +199,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    squasher (0.6.0)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -245,6 +246,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
+  squasher
   therubyracer
   tzinfo-data
   uglifier
