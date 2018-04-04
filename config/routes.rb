@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :courses, only: [:index, :show]
 
     get 'instructors/search', to: 'instructors#search', as: :instructors_search
+    get 'instructors/:id/grades', to: 'instructors#grades', as: :instructor_grades
     resources :instructors, only: [:index, :show]
 
     resources :course_offerings, only: [:show]
