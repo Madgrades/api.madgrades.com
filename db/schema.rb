@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404203823) do
+ActiveRecord::Schema.define(version: 20180404213631) do
+
+  create_table "course_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "course_uuid"
+    t.integer "gpa_total"
+    t.decimal "count_avg", precision: 6, scale: 3
+    t.decimal "gpa", precision: 6, scale: 3
+  end
 
   create_table "course_offering_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_uuid"
@@ -112,6 +119,13 @@ ActiveRecord::Schema.define(version: 20180404203823) do
     t.index ["term_code"], name: "index_instructor_grade_dists_on_term_code"
   end
 
+  create_table "instructor_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "instructor_id"
+    t.integer "gpa_total"
+    t.decimal "count_avg", precision: 6, scale: 3
+    t.decimal "gpa", precision: 10, scale: 6
+  end
+
   create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "id"
     t.string "name"
@@ -149,6 +163,13 @@ ActiveRecord::Schema.define(version: 20180404203823) do
     t.index ["course_offering_uuid"], name: "index_sections_on_course_offering_uuid"
     t.index ["number"], name: "index_sections_on_number"
     t.index ["uuid"], name: "index_sections_on_uuid", unique: true
+  end
+
+  create_table "subject_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "subject_code"
+    t.integer "gpa_total"
+    t.decimal "count_avg", precision: 6, scale: 3
+    t.decimal "gpa", precision: 10, scale: 6
   end
 
   create_table "subject_memberships", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

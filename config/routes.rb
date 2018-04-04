@@ -30,5 +30,9 @@ Rails.application.routes.draw do
     resources :sections, only: [:show]
 
     resources :subjects, only: [:index, :show]
+
+    get 'explore/courses', to: 'explore#courses', as: :explore_courses
+    get 'explore/subjects', to: 'explore#subjects', as: :explore_subjects
+    get 'explore/instructors', to: 'explore#instructors', as: :explore_instructors
   end
 end

@@ -17,8 +17,7 @@ class V1::CoursesController < ApiController
     sorted = true
 
     # if the user uses these sorting methods, we have a special query
-    if %w(trending_recent trending_all trending_gpa_recent trending_gpa_all).include?(sort)
-    elsif sort == 'name'
+    if sort == 'name'
       @courses = Course.order("name #{order}")
     elsif sort == 'number'
       @courses = Course.order("number #{order}")
@@ -55,7 +54,6 @@ class V1::CoursesController < ApiController
 
     searchkick = false
 
-    # TODO: Untested, needed searchkick backend to test
     if query.present?
       if sorted
         search_results = Course.search_without_page(query).map(&:uuid)
