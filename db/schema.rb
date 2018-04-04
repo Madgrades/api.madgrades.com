@@ -10,14 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310191259) do
-
-  create_table "course_changes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "course_uuid"
-    t.decimal "count_change", precision: 10, scale: 6
-    t.decimal "gpa_change", precision: 10, scale: 6
-    t.string "duration"
-  end
+ActiveRecord::Schema.define(version: 20180404203823) do
 
   create_table "course_offering_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_uuid"
