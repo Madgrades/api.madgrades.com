@@ -19,10 +19,6 @@ class Course < ApplicationRecord
     Course.search(query, misspellings: {below: 5})
   end
 
-  def change(duration)
-    CourseChange.where(course_uuid: uuid, duration: duration).first
-  end
-
   def search_data
     {
         names: "#{subject_names.join(' ')} #{subject_initials.join(' ')} #{subject_abbrevs.join(' ')} #{names.join(' ')} #{number}",
