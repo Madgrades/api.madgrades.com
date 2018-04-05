@@ -14,7 +14,6 @@ gem 'dotenv-rails'
 gem 'omniauth'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-github'
-gem 'omniauth-google-oauth2'
 
 # api
 gem 'searchkick'

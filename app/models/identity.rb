@@ -15,8 +15,6 @@ class Identity < ApplicationRecord
     case provider
       when 'github'
         return 'GitHub'
-      when 'google_oauth2'
-        return 'Google'
       else
         return provider
     end

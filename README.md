@@ -31,9 +31,11 @@ This can take a long time (5+ minutes, longer on slower computers). Alternativel
 
 ## API Authentication
 
-You will notice that inside `config/initializers/omniauth.rb` there are two providers listed: Google and Github. To support both you must create your own developer applications on both of these services and put them in your environment variables before executing the app. When creating your application, it is only important that your callback is listed as:
+You will notice that inside `config/initializers/omniauth.rb` there is a GitHub auth provider. 
+You must create your own developer application on the GitHub platform and put it in your
+environment variables before executing the app. When creating your application, 
+it is only important that your callback is listed as:
 
 * Github: `http://localhost:3000/auth/github/callback`
-* Google: `http://localhost:3000/auth/google_oauth2/callback`
 
-If you are not running on `localhost:3000`, make sure you reflect that in your Google or Github dev apps.
+If you are not running on `localhost:3000`, make sure you reflect that in your GitHub app.
