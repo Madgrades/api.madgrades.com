@@ -23,13 +23,13 @@
   <p>
     <strong>API Token: </strong>
     <%= current_user.api_token %>
-    (<%= link_to 'Regenerate', regenerate_api_token_path %>)
+    (<%= link_to 'Regenerate', regenerate_api_token_path, data: {confirm: "Are you sure?"} %>)
   </p>
 
   <p>
     <strong>Example:</strong>
   </p>
-  <pre style="background-color: #f3f3f3; padding: 15px;">curl -H "Authorization: Token token=<%= current_user.api_token %>" <%= courses_url %></pre>
+  <pre><code>curl -H "Authorization: Token token=<%= current_user.api_token %>" <%= courses_url %></code></pre>
 <% else %>
   <%= link_to '/auth/github', class: 'button' do %>
     <%= fa_icon "github", class: 'fa-2x', style: 'vertical-align: middle' %>

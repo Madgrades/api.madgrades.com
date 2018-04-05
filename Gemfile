@@ -26,6 +26,7 @@ gem 'rails', '~> 5.1.3'
 gem 'puma', '~> 3.7'
 
 # assets
+gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'therubyracer'
 gem 'uglifier'
