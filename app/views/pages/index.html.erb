@@ -29,7 +29,7 @@
   <p>
     <strong>Example:</strong>
   </p>
-  <pre><code>curl -H "Authorization: Token token=<%= current_user.api_token %>" <%= courses_url %></code></pre>
+  <pre><code>curl -H "Authorization: Token token=<%= current_user.api_token %>" <%= courses_url %></code>vi</pre>
 <% else %>
   <%= link_to '/auth/github', class: 'button' do %>
     <%= fa_icon "github", class: 'fa-2x', style: 'vertical-align: middle' %>
