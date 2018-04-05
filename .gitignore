@@ -1,4 +1,5 @@
 .idea
+database.yml
 .env
 public/assets
 
