@@ -2,10 +2,10 @@ class V1::CoursesController < ApiController
   def index
     sort = params[:sort]
     order = (params[:order] || '').upcase!
-    subject = params[:subject]
+    subject = params[:subject] || params[:subjects]
     instructor = params[:instructor]
     query = params[:query]
-    number = params[:number]
+    number = params[:number] || params[:numbers]
     page = params[:page]
     per_page = params[:per_page]
 
@@ -22,8 +22,14 @@ class V1::CoursesController < ApiController
     elsif sort == 'number'
       @courses = Course.order("number #{order}")
     elsif sort == 'relevance' || true
-      @courses = Course
-      sorted = false
+      if query.present?
+        # default to no sort if query is present
+        @courses = Course
+        sorted = false
+      else
+        # default to number order
+        @courses = Course.order("number #{order}")
+      end
     end
 
     filters = {}
