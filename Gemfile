@@ -12,6 +12,7 @@ gem 'dotenv-rails'
 
 # api auth
 gem 'omniauth'
+gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
@@ -23,6 +24,7 @@ gem 'rack-cors'
 
 # server
 gem 'rails', '~> 5.1.3'
+gem 'loofah', '~> 2.2.2'
 gem 'puma', '~> 3.7'
 
 # assets
