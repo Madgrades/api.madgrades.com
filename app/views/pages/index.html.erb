@@ -24,7 +24,7 @@
 
   <p>
     <strong>API Token: </strong>
-    <%= current_user.api_token %>
+    <code><%= current_user.api_token %></code>
     (<%= link_to 'Regenerate', regenerate_api_token_path, data: {confirm: "Are you sure?"} %>)
   </p>
 
