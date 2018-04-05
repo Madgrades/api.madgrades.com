@@ -1,0 +1,156 @@
+
+<h5 style="font-weight: bold">/courses</h5>
+
+<p>A paginated list of courses.</p>
+
+<div style="overflow-x:auto">
+  <table class="u-full-width">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Examples</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        <code>instructor</code><br/>
+        <code>instructors</code>
+      </td>
+      <td>List (Number)</td>
+      <td>
+        Filter results by courses that have been taught by particular instructors. Provide a comma
+        separated list of instructor ids.
+      </td>
+      <td>
+        <ul>
+          <li>
+            <code>100191</code>
+          </li>
+          <li>
+            <code>102516,103165</code>: Find courses that have been taught by either 102516, or 103165.
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>number</code><br/>
+        <code>numbers</code>
+      </td>
+      <td>List (Number)</td>
+      <td>
+        Filter results by course number. Provide a comma separated list of numbers.
+      </td>
+      <td>
+        <ul>
+          <li>
+            <code>252</code>
+          </li>
+          <li>
+            <code>101,201</code>: Find courses with the course number 101 or 201.
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><code>order</code></td>
+      <td>String</td>
+      <td>
+        Set the direction of the sorted results. Must be one of the following:
+        <ul>
+          <li>
+            <code>asc</code> (default): Ascending order.
+          </li>
+          <li>
+            <code>desc</code>: Descending order.
+          </li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>
+            <code>asc</code>
+          </li>
+          <li>
+            <code>desc</code>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><code>query</code></td>
+      <td>String</td>
+      <td>Filter results by a search query.</td>
+      <td>
+        <ul>
+          <li>
+            <code>cs 252</code>
+          </li>
+          <li>
+            <code>Calculus</code>
+          </li>
+          <li>
+            <code>Spanish IV</code>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><code>sort</code></td>
+      <td>String</td>
+      <td>
+        Set how the results are sorted. If provided, it must be one of the following:
+        <ul>
+          <li>
+            <code>name</code>: Sort by the name of the course.
+          </li>
+          <li>
+            <code>number</code> (default): Sort by the course number.
+          </li>
+          <li>
+            <code>relevance</code> (default when <code>query</code> present): Sort by closeness to
+            the search query.
+          </li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>
+            <code>name</code>
+          </li>
+          <li>
+            <code>number</code>
+          </li>
+          <li>
+            <code>relevance</code>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>subject</code><br/>
+        <code>subjects</code>
+      </td>
+      <td>List (String)</td>
+      <td>
+        Filter results by courses belonging/crosslisted to particular subjects. Provide a comma
+        separated list of subject codes.
+      </td>
+      <td>
+        <ul>
+          <li>
+            <code>266</code>
+          </li>
+          <li>
+            <code>146,200,205</code>: Find courses that belong to either 146, 200, or 205.
+          </li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

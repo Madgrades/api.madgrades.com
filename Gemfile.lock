@@ -74,6 +74,8 @@ GEM
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.22)
+    font-awesome-rails (4.7.0.3)
+      railties (>= 3.2, < 5.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashie (3.5.7)
@@ -232,6 +234,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   dotenv
   dotenv-rails
+  font-awesome-rails
   jbuilder
   kaminari
   listen (>= 3.0.5, < 3.2)

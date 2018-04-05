@@ -1,9 +1,9 @@
-<h1>Madgrades API</h1>
+<h2>Madgrades API</h2>
 
 <% if current_user %>
   <p>
     Signed in as <%= current_user.name %>
-    (<%= link_to 'Sign out', signout_path, id: 'sign_out' %>)
+    (<%= link_to 'Sign out', signout_path, id: 'sign_out', class: 'button-primary' %>)
   </p>
 
   <p>
@@ -31,11 +31,16 @@
   </p>
   <pre style="background-color: #f3f3f3; padding: 15px;">curl -H "Authorization: Token token=<%= current_user.api_token %>" <%= courses_url %></pre>
 <% else %>
-  <%= link_to 'Sign in with Google', '/auth/google_oauth2' %>
-  <%= link_to 'Sign in with Github', '/auth/github' %>
+  <%= link_to '/auth/github', class: 'button' do %>
+    <%= fa_icon "github", class: 'fa-2x', style: 'vertical-align: middle' %>
+    <span style='vertical-align: middle'>Sign in with Github</span>
+  <% end %>
+  <%= link_to '/auth/google_oauth2', class: 'button' do %>
+    <%= fa_icon "google", class: 'fa-2x', style: 'vertical-align: middle' %>
+    <span style='vertical-align: middle'>Sign in with Google</span>
+  <% end %>
 <% end %>
 
-<h2>Documentation</h2>
-<p>
-  To be completed.
-</p>
+<hr/>
+
+<%= render partial: 'pages/docs' %>

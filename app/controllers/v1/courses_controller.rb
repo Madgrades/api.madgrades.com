@@ -3,7 +3,7 @@ class V1::CoursesController < ApiController
     sort = params[:sort]
     order = (params[:order] || '').upcase!
     subject = params[:subject] || params[:subjects]
-    instructor = params[:instructor]
+    instructor = params[:instructor] || params[:instructors]
     query = params[:query]
     number = params[:number] || params[:numbers]
     page = params[:page]

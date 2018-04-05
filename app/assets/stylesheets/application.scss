@@ -1,6 +1,28 @@
+/* ...
+*= require font-awesome
+*= require_tree .
+*= require_self
+*/
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
 body {
   font-family: 'Lato', sans-serif;
 }
 
+
+
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  height: auto;
+}
+W
+ul {
+  margin-bottom: 0;
+}
+
+li {
+  margin-bottom: 0;
+}

@@ -1,0 +1,24 @@
+<h3>Documentation</h3>
+
+<p>
+  <strong>Documentation is not yet complete.</strong>
+</p>
+
+<p>
+  All requests should be <code>GET</code> HTTP requests. You must provide your API token in the
+  format of an <code>Authorization</code> header like so:
+</p>
+
+<pre><code>Authorization: Token token=&lt;your api token&gt;</code></pre>
+
+<p>
+  The API endpoints are listed below with the query string parameters that each endpoint supports.
+  Parameters which are highlighted in yellow are required. Endpoints which are identified as
+  being paginated also accept the parameters <code>page</code> (Number) and <code>per_page</code>
+  (Number).
+</p>
+
+<%= render 'pages/docs_courses' %>
+<%= render 'pages/docs_courses_show' %>
+<%= render 'pages/docs_subjects' %>
+<%= render 'pages/docs_instructors' %>
