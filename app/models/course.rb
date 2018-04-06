@@ -3,10 +3,18 @@ class Course < ApplicationRecord
   self.primary_key = :uuid
   searchkick word_start: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
 
+  def self.prepare_query(query)
+    if query.present?
+      # convert "math340" to "math 340" for example
+      query.gsub!(/([A-z])([0-9])/, '\1 \2')
+    end
+    query
+  end
+
   def self.search_with_page(query, page, per_page, where={})
     per_pages = [Kaminari.config.default_per_page, Kaminari.config.max_per_page]
     per_pages.push(per_page.to_i) if per_page.present?
-    Course.search(query,
+    Course.search(prepare_query(query),
                   page: page,
                   per_page: per_pages.min,
                   where: where,
@@ -16,7 +24,7 @@ class Course < ApplicationRecord
   end
 
   def self.search_without_page(query)
-    Course.search(query, misspellings: {below: 5})
+    Course.search(prepare_query(query), misspellings: {below: 5})
   end
 
   def search_data
