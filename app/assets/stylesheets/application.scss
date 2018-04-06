@@ -9,7 +9,9 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-
+pre > code {
+  overflow-x: auto;
+}
 
 .button,
 button,
@@ -18,7 +20,7 @@ input[type="reset"],
 input[type="button"] {
   height: auto;
 }
-W
+
 ul {
   margin-bottom: 0;
 }
