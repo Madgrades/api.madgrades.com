@@ -1,23 +1,69 @@
 class V1::ExploreController < ApiController
   def courses
+    subject_param = params[:subject] || params[:subjects]
+    instructor_param = params[:instructor] || params[:instructors]
+    @grades = nil
+    course_uuids = nil
+
+    if subject_param.present?
+      subjects = Subject.where(code: subject_param.split(","))
+      uuids = subjects.collect {|s| s.courses}.flatten.map(&:uuid)
+      
+      if course_uuids.present?
+        course_uuids &= uuids
+      else
+        course_uuids = uuids
+      end
+    end
+
+    if instructor_param.present?
+      instructors = Instructor.where(id: instructor_param.split(",").map(&:to_i))
+      uuids = instructors.collect {|i| i.courses}.flatten.map(&:uuid)
+
+      if course_uuids.present?
+        course_uuids &= uuids
+      else
+        course_uuids = uuids
+      end
+    end
+
     @grades = CourseGrade
-    @grades = apply_filters(@grades)
-    @grades = apply_sort(@grades)
-    @grades = apply_page(@grades)
+
+    if course_uuids != nil
+      @grades = @grades.where(course_uuid: course_uuids)
+    end
+
+    @grades = apply_params(@grades)
   end
 
   def subjects
     @grades = SubjectGrade
-    @grades = apply_filters(@grades)
-    @grades = apply_sort(@grades)
-    @grades = apply_page(@grades)
+    @grades = apply_params(@grades)
   end
 
   def instructors
-    @grades = InstructorGrade
-    @grades = apply_filters(@grades)
-    @grades = apply_sort(@grades)
-    @grades = apply_page(@grades)
+    instructor_param = params[:instructor] || params[:instructors]
+    subject_param = params[:subject] || params[:subjects]
+
+    if subject_param.present?
+      subject_codes = subject_param.split(",")
+      @grades = InstructorGrade
+                  .select('DISTINCT instructor_grades.*')
+                  .joins('JOIN teachings ON teachings.instructor_id = instructor_grades.instructor_id')
+                  .joins('JOIN sections ON sections.uuid = teachings.section_uuid')
+                  .joins('JOIN subject_memberships ON subject_memberships.course_offering_uuid = sections.course_offering_uuid')
+                  .joins('JOIN subjects ON subjects.code = subject_memberships.subject_code')
+                  .where('subjects.code IN (?)', subject_codes)
+    else
+      @grades = InstructorGrade
+    end
+
+    if instructor_param.present?
+      instructor_ids = instructor_param.split(",").map(&:to_i)
+      @grades = @grades.where(instructor_id: instructor_ids)
+    end
+
+    @grades = apply_params(@grades)
   end
 
   private
@@ -36,8 +82,6 @@ class V1::ExploreController < ApiController
 
     model = model.where('gpa_total >= ?', min_gpa_total)
     model = model.where('count_avg >= ?', min_count_avg)
-
-    model
   end
 
   def apply_sort(model)
