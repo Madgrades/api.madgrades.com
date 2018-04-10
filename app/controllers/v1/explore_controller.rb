@@ -42,6 +42,7 @@ class V1::ExploreController < ApiController
   end
 
   def instructors
+    instructor_param = params[:instructor] || params[:instructors]
     subject_param = params[:subject] || params[:subjects]
 
     if subject_param.present?
@@ -55,6 +56,11 @@ class V1::ExploreController < ApiController
                   .where('subjects.code IN (?)', subject_codes)
     else
       @grades = InstructorGrade
+    end
+
+    if instructor_param.present?
+      instructor_ids = instructor_param.split(",").map(&:to_i)
+      @grades = @grades.where(instructor_id: instructor_ids)
     end
 
     @grades = apply_params(@grades)
