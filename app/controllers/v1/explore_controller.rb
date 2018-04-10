@@ -7,7 +7,7 @@ class V1::ExploreController < ApiController
 
     if subject_param.present?
       subjects = Subject.where(code: subject_param.split(","))
-      uuids = subjects.collect {|s| s.courses}.flatten.map {|c| c.uuid}
+      uuids = subjects.collect {|s| s.courses}.flatten.map(&:uuid)
       
       if course_uuids.present?
         course_uuids &= uuids
@@ -18,7 +18,7 @@ class V1::ExploreController < ApiController
 
     if instructor_param.present?
       instructors = Instructor.where(id: instructor_param.split(",").map(&:to_i))
-      uuids = instructors.collect {|i| i.courses}.flatten.map {|c| c.uuid}
+      uuids = instructors.collect {|i| i.courses}.flatten.map(&:uuid)
 
       if course_uuids.present?
         course_uuids &= uuids
@@ -29,7 +29,7 @@ class V1::ExploreController < ApiController
 
     @grades = CourseGrade
 
-    if course_uuids.present?
+    if course_uuids != nil
       @grades = @grades.where(course_uuid: course_uuids)
     end
 
