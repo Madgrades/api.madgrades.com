@@ -47,6 +47,7 @@ class V1::ExploreController < ApiController
     if subject_param.present?
       subject_codes = subject_param.split(",")
       @grades = InstructorGrade
+                  .select('DISTINCT instructor_grades.*')
                   .joins('JOIN teachings ON teachings.instructor_id = instructor_grades.instructor_id')
                   .joins('JOIN sections ON sections.uuid = teachings.section_uuid')
                   .joins('JOIN subject_memberships ON subject_memberships.course_offering_uuid = sections.course_offering_uuid')
@@ -75,8 +76,6 @@ class V1::ExploreController < ApiController
 
     model = model.where('gpa_total >= ?', min_gpa_total)
     model = model.where('count_avg >= ?', min_count_avg)
-
-    model
   end
 
   def apply_sort(model)
