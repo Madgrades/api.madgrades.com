@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404213631) do
+ActiveRecord::Schema.define(version: 20180625194343) do
 
   create_table "course_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "course_uuid"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20180404213631) do
     t.integer "nw_count"
     t.integer "nr_count"
     t.integer "other_count"
+    t.decimal "gpa", precision: 7, scale: 5
     t.index ["course_offering_uuid"], name: "index_grade_distributions_on_course_offering_uuid"
     t.index ["section_number"], name: "index_grade_distributions_on_section_number"
   end
