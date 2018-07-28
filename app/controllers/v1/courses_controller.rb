@@ -96,19 +96,13 @@ class V1::CoursesController < ApiController
                                .where(course_offering_uuid: course_offering_uuids)
                                .distinct
 
+    @cumulative = GradeDistribution.zero
     @grade_distributions = @grade_distributions.to_a.group_by {|d| d.term_code}
 
     @grade_distributions = @grade_distributions.map do |term_code, section_dists|
       res = {}
       res[:term_code] = term_code
       res[:cumulative] = GradeDistribution.zero
-      numbers = Set.new
-      section_dists.each do |dist|
-        unless numbers.include?(dist.section_number)
-          numbers.add(dist.section_number)
-          res[:cumulative] += dist
-        end
-      end
       res[:sections] = []
 
       sections = section_dists.group_by {|d| d.section_number}
@@ -118,12 +112,13 @@ class V1::CoursesController < ApiController
         dist[:section_number] = number
         dist[:instructors] = dists.map {|d| {id: d.i_id, name: d.i_name}}
         res[:sections].push(dist)
+
+        dist[:cumulative] += dist[:grades]
       end
+
+      @cumulative += res[:cumulative]
       res
     end
-
-    # add up the offering cumulatives to get total cumulative
-    @cumulative = @grade_distributions.values.inject(GradeDistribution.zero) {|x, y| x[:cumulative] + y[:cumulative]}
 
     @grade_distributions.sort! {|a,b| b[:term_code] - a[:term_code]}
   end
