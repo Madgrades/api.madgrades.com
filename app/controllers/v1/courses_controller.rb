@@ -113,7 +113,7 @@ class V1::CoursesController < ApiController
         dist[:instructors] = dists.map {|d| {id: d.i_id, name: d.i_name}}
         res[:sections].push(dist)
 
-        dist[:cumulative] += dist[:grades]
+        res[:cumulative] += dist[:grades]
       end
 
       @cumulative += res[:cumulative]
