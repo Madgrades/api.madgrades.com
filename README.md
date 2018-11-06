@@ -15,6 +15,7 @@ A REST interface for UW Madison course data, powered by Rails. This README is fo
 4. Test it out: `rails s` and visit `http://localhost:3000`
 5. Populate the database with real data (see below)
 6. Setup API authentication (see below)
+7. Setup Elasticsearch with `rake reindex`
 
 ## Data
 
@@ -28,6 +29,7 @@ This can take a long time (5+ minutes, longer on slower computers). Alternativel
 
 > *Note:* In order to import large SQL dumps, you may have to tune up your SQL server settings or else you may get an error like: `MySQL server has gone away`. Set `max_allowed_packet = 1G` _temporarily_ in your `mysqld.conf` or `my.cnf` depending on your operating system. It is dangerous to keep this setting, so revert it back to ~16M once imported.
 
+Once imported, from the Rails API use `rake grades` to populate necessary the grade distribution tables.
 
 ## API Authentication
 
