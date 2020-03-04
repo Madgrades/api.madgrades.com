@@ -25,7 +25,7 @@ gem 'rack-cors'
 # server
 gem 'rails', '~> 5.2.0'
 gem 'loofah', '~> 2.2.2'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 
 # assets
 gem 'jquery-rails'
