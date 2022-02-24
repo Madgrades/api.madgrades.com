@@ -8,11 +8,11 @@ class User < ApplicationRecord
   end
 
   def self.create_with_omniauth(info)
-    create(name: info['name'], email: info['email'])
+    create(name: info['email'], email: info['email'])
   end
 
   def update_with_omniauth(info)
-    update(email: info['email'])
+    update(name: info['email'], email: info['email'])
   end
 
   def regenerate_api_token
