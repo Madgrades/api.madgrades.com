@@ -9,7 +9,7 @@ gem 'rack-throttle'
 gem 'rufus-scheduler'
 gem 'dotenv'
 gem 'dotenv-rails'
-gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'rails-html-sanitizer', '~> 1.4.3'
 
 # api auth
 gem 'omniauth'
