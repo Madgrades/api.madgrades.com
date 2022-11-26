@@ -5,7 +5,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 gem 'rack-throttle'
 gem 'rufus-scheduler'
 gem 'dotenv'
@@ -25,8 +24,8 @@ gem 'rack-cors'
 
 # server
 gem 'rails', '~> 5.2.0'
-gem 'loofah', '~> 2.2.2'
-gem 'puma', '~> 3.7'
+gem 'loofah'
+gem 'puma'
 
 # assets
 gem 'jquery-rails'
