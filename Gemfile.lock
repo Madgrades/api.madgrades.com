@@ -193,8 +193,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.4)
-      loofah (~> 2.2, >= 2.2.2)
+    rails-html-sanitizer (1.4.3)
+      loofah (~> 2.3)
     railties (5.2.8.1)
       actionpack (= 5.2.8.1)
       activesupport (= 5.2.8.1)
@@ -288,7 +288,7 @@ DEPENDENCIES
   rack-cors
   rack-throttle
   rails (~> 5.2.0)
-  rails-html-sanitizer (~> 1.0.4)
+  rails-html-sanitizer
   rufus-scheduler
   sass
   sass-rails
