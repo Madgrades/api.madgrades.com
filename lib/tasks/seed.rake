@@ -10,6 +10,18 @@ namespace :seed do
     if options[:path].nil? || options[:path].empty?
       abort(parser.help)
     end
+
+    puts 'Deleting base tables (this may take a while)...'
+    CourseOffering.delete_all
+    Course.delete_all
+    GradeDistribution.delete_all
+    Instructor.delete_all
+    Room.delete_all
+    Schedule.delete_all
+    Section.delete_all
+    SubjectMembership.delete_all
+    Subject.delete_all
+    Teaching.delete_all
     
     glob = Dir.glob("#{options[:path]}/*.sql")
     puts "Seeding tables from: #{options[:path]}/*.sql (#{glob})"
