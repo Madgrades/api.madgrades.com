@@ -1,20 +1,17 @@
 namespace :grades do
   task courses: :environment do
-    puts 'Courses...'
+    puts 'Seeding course_grades (this may take a while)'
     CourseGrade.repopulate!
-    puts 'Done!'
   end
 
   task instructors: :environment do
-    puts 'Instructors...'
+    puts 'Seeding instructor_grades (this may take a while)'
     InstructorGrade.repopulate!
-    puts 'Done!'
   end
 
   task subjects: :environment do
-    puts 'Subjects...'
+    puts 'Seeding subject_grades (this may take a while)'
     SubjectGrade.repopulate!
-    puts 'Done!'
   end
 
   task :all => [:courses, :instructors, :subjects]
