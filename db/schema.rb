@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180625194343) do
+ActiveRecord::Schema.define(version: 2018_06_25_194343) do
 
-  create_table "course_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "course_grades", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "course_uuid"
     t.integer "gpa_total"
     t.decimal "count_avg", precision: 6, scale: 3
     t.decimal "gpa", precision: 6, scale: 3
   end
 
-  create_table "course_offering_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "course_offering_grade_dists", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "course_uuid"
     t.integer "term_code"
     t.integer "a_count"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["term_code"], name: "index_course_offering_grade_dists_on_term_code"
   end
 
-  create_table "course_offerings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "course_offerings", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid"
     t.string "course_uuid"
     t.integer "term_code"
@@ -53,14 +53,14 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["uuid"], name: "index_course_offerings_on_uuid", unique: true
   end
 
-  create_table "courses", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "courses", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid"
     t.integer "number"
     t.string "name"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
-  create_table "grade_distributions", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "grade_distributions", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "course_offering_uuid"
     t.integer "section_number"
     t.integer "a_count"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["section_number"], name: "index_grade_distributions_on_section_number"
   end
 
-  create_table "identities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
+  create_table "identities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
     t.string "provider"
     t.string "uid"
     t.string "oauth_token"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
-  create_table "instructor_grade_dists", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "instructor_grade_dists", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "course_uuid"
     t.integer "instructor_id"
     t.integer "term_code"
@@ -120,27 +120,27 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["term_code"], name: "index_instructor_grade_dists_on_term_code"
   end
 
-  create_table "instructor_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "instructor_grades", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "instructor_id"
     t.integer "gpa_total"
     t.decimal "count_avg", precision: 6, scale: 3
     t.decimal "gpa", precision: 10, scale: 6
   end
 
-  create_table "instructors", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "instructors", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "id"
     t.string "name"
     t.index ["id"], name: "index_instructors_on_id", unique: true
   end
 
-  create_table "rooms", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "rooms", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid"
     t.string "facility_code"
     t.string "room_code"
     t.index ["uuid"], name: "index_rooms_on_uuid", unique: true
   end
 
-  create_table "schedules", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "schedules", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid"
     t.integer "start_time"
     t.integer "end_time"
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["uuid"], name: "index_schedules_on_uuid", unique: true
   end
 
-  create_table "sections", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "sections", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid"
     t.string "course_offering_uuid"
     t.string "section_type"
@@ -166,21 +166,21 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["uuid"], name: "index_sections_on_uuid", unique: true
   end
 
-  create_table "subject_grades", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "subject_grades", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "subject_code"
     t.integer "gpa_total"
     t.decimal "count_avg", precision: 6, scale: 3
     t.decimal "gpa", precision: 10, scale: 6
   end
 
-  create_table "subject_memberships", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "subject_memberships", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "subject_code"
     t.string "course_offering_uuid"
     t.index ["course_offering_uuid"], name: "index_subject_memberships_on_course_offering_uuid"
     t.index ["subject_code"], name: "index_subject_memberships_on_subject_code"
   end
 
-  create_table "subjects", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "subjects", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code"
     t.string "name"
     t.string "abbreviation"
@@ -188,14 +188,14 @@ ActiveRecord::Schema.define(version: 20180625194343) do
     t.index ["name"], name: "index_subjects_on_name"
   end
 
-  create_table "teachings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "teachings", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "section_uuid"
     t.integer "instructor_id"
     t.index ["instructor_id"], name: "index_teachings_on_instructor_id"
     t.index ["section_uuid"], name: "index_teachings_on_section_uuid"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", null: false

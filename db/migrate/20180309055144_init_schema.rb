@@ -67,7 +67,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.index ["section_number"], name: "index_grade_distributions_on_section_number"
     end
     create_table "identities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-      t.bigint "user_id"
+      t.integer "user_id"
       t.string "provider"
       t.string "uid"
       t.string "oauth_token"
