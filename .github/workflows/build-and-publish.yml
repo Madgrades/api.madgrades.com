@@ -28,5 +28,3 @@ jobs:
             ghcr.io/madgrades/api.madgrades.com:latest
           push: true
           # push: ${{ github.ref == 'refs/heads/main' }}
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
