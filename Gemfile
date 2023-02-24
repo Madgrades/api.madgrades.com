@@ -13,7 +13,7 @@ gem 'rails-html-sanitizer'
 
 # api auth
 gem 'omniauth'
-gem 'omniauth-oauth2', '~> 1.4.0'
+gem 'omniauth-oauth2', '~> 1.8.0'
 gem 'omniauth-github'
 
 # api
