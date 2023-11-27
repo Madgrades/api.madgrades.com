@@ -26,5 +26,5 @@ jobs:
           context: ./
           tags: |
             ghcr.io/madgrades/api.madgrades.com:latest
-          push: true
-          # push: ${{ github.ref == 'refs/heads/main' }}
+          # push: true
+          push: ${{ github.ref == 'refs/heads/main' }}
