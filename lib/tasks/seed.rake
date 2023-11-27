@@ -12,16 +12,16 @@ namespace :seed do
     end
 
     puts 'Deleting base tables (this may take a while)...'
-    CourseOffering.delete_all
-    Course.delete_all
-    GradeDistribution.delete_all
-    Instructor.delete_all
-    Room.delete_all
-    Schedule.delete_all
-    Section.delete_all
-    SubjectMembership.delete_all
-    Subject.delete_all
-    Teaching.delete_all
+    ActiveRecord::Base.connection.truncate(CourseOffering.table_name)
+    ActiveRecord::Base.connection.truncate(Course.table_name)
+    ActiveRecord::Base.connection.truncate(GradeDistribution.table_name)
+    ActiveRecord::Base.connection.truncate(Instructor.table_name)
+    ActiveRecord::Base.connection.truncate(Room.table_name)
+    ActiveRecord::Base.connection.truncate(Schedule.table_name)
+    ActiveRecord::Base.connection.truncate(Section.table_name)
+    ActiveRecord::Base.connection.truncate(SubjectMembership.table_name)
+    ActiveRecord::Base.connection.truncate(Subject.table_name)
+    ActiveRecord::Base.connection.truncate(Teaching.table_name)
     
     glob = Dir.glob("#{options[:path]}/*.sql")
     puts "Seeding tables from: #{options[:path]}/*.sql (#{glob})"

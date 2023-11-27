@@ -272,7 +272,6 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara (~> 2.13)
-  dotenv
   dotenv-rails
   font-awesome-rails
   jbuilder

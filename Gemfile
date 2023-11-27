@@ -7,8 +7,7 @@ end
 
 gem 'rack-throttle'
 gem 'rufus-scheduler'
-gem 'dotenv'
-gem 'dotenv-rails'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'rails-html-sanitizer'
 
 # api auth
