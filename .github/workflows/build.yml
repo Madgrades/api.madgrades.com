@@ -1,0 +1,15 @@
+name: Build on pull request
+on:
+  pull_request:
+jobs:
+  build-and-push-docker-image:
+    name: Build Docker image and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          push: false
