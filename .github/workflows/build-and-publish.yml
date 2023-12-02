@@ -20,11 +20,11 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.PUBLISHING_GITHUB_USERNAME }}
           password: ${{ secrets.PUBLISHING_GITHUB_TOKEN }}
+          if: ${{ github.ref == 'refs/heads/main' }}
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
         with:
           context: ./
           tags: |
             ghcr.io/madgrades/api.madgrades.com:latest
-          # push: true
           push: ${{ github.ref == 'refs/heads/main' }}
