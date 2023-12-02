@@ -34,5 +34,7 @@ Rails.application.routes.draw do
     get 'explore/courses', to: 'explore#courses', as: :explore_courses
     get 'explore/subjects', to: 'explore#subjects', as: :explore_subjects
     get 'explore/instructors', to: 'explore#instructors', as: :explore_instructors
+
+    get 'revision', to: 'pages#revision'
   end
 end
