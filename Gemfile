@@ -22,7 +22,7 @@ gem 'jbuilder'
 gem 'rack-cors'
 
 # server
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 7.0.8'
 gem 'loofah'
 gem 'puma'
 
