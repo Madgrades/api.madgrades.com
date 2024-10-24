@@ -1,7 +1,7 @@
 class Subject < ApplicationRecord
   self.primary_key = :code
 
-  searchkick word_start: [:code, :name, :abbreviation]
+  searchkick text_middle: [:code, :name, :abbreviation]
 
   default_scope { order(code: :asc) }
 
@@ -11,7 +11,7 @@ class Subject < ApplicationRecord
     Subject.search(query,
                   page: page,
                   per_page: per_pages.min,
-                  match: :word_start,
+                  match: :text_middle,
                   fields: [:code, :name, :abbreviation])
   end
 

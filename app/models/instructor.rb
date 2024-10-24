@@ -1,7 +1,7 @@
 class Instructor < ApplicationRecord
   require 'csv'
   self.primary_key = :id
-  searchkick word_start: [:name], synonyms: -> { CSV.read("#{Rails.root}/lib/nicknames.csv") }
+  searchkick text_middle: [:name], synonyms: -> { CSV.read("#{Rails.root}/lib/nicknames.csv") }
 
   default_scope { order(id: :asc) }
 
@@ -12,7 +12,7 @@ class Instructor < ApplicationRecord
                   page: page,
                   per_page: per_pages.min,
                   misspellings: {below: 5},
-                  match: :word_start,
+                  match: :text_middle,
                   fields: [:name])
   end
 

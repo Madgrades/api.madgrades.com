@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
   require 'csv'
   self.primary_key = :uuid
-  searchkick word_start: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
+  searchkick text_middle: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
 
   def self.prepare_query(query)
     if query.present?
@@ -19,7 +19,7 @@ class Course < ApplicationRecord
                   per_page: per_pages.min,
                   where: where,
                   misspellings: {below: 5},
-                  match: :word_start,
+                  match: :text_middle,
                   fields: [:names, :uuid])
   end
 
