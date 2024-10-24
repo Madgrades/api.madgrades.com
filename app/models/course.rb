@@ -19,12 +19,17 @@ class Course < ApplicationRecord
                   per_page: per_pages.min,
                   where: where,
                   misspellings: {below: 5},
-                  match: :text_middle,
-                  fields: [:names, :uuid])
+                  match: :word_middle,
+                  fields: [:names, :uuid],
+                  operator: "or")
   end
 
   def self.search_without_page(query)
-    Course.search(prepare_query(query), misspellings: {below: 5})
+    Course.search(prepare_query(query), 
+                  misspellings: {below: 5}, 
+                  match: :word_middle,
+                  fields: [:names, :uuid],
+                  operator: "or")
   end
 
   def search_data
