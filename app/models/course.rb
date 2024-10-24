@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
   require 'csv'
   self.primary_key = :uuid
-  searchkick text_middle: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
+  searchkick word_middle: [:names, :uuid], synonyms: -> { CSV.read("#{Rails.root}/lib/course_synonyms.csv") }
 
   def self.prepare_query(query)
     if query.present?
