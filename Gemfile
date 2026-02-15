@@ -5,7 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rack-throttle'
+gem 'rake', '~> 13.0'
+gem 'rack-attack'
 gem 'rufus-scheduler'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'rails-html-sanitizer'
@@ -22,7 +23,7 @@ gem 'jbuilder'
 gem 'rack-cors'
 
 # server
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.1.0'
 gem 'loofah'
 gem 'puma'
 
@@ -35,7 +36,7 @@ gem 'sass'
 gem 'sass-rails'
 
 # db
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'mysql2', '~> 0.5'
 
 group :tools do
   gem 'squasher'

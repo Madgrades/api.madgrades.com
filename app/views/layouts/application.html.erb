@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official API for accessing UW-Madison grade distribution data">
   <title>Madgrades API</title>
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+    .stagger-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+    .stagger-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+    .stagger-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+  </style>
 </head>
-<body>
-<div class="container">
+<body class="bg-zinc-950 antialiased">
   <%= yield %>
-</div>
 </body>
 </html>

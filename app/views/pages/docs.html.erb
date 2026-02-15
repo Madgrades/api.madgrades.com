@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* Hide Swagger UI topbar (removes URL input and branding) */
+    .swagger-ui .topbar { display: none !important; }
+    /* Fix code example and highlight block backgrounds for dark mode */
+    .swagger-ui pre, .swagger-ui code, .swagger-ui .microlight, .swagger-ui .highlight-code, .swagger-ui .example {
+      background: #23272a !important;
+      color: #e8e6e3 !important;
+      border-radius: 4px;
+      border: 1px solid #444 !important;
+    }
+    .swagger-ui .highlight-code .hljs-attr {
+      color: #b3d1ff !important;
+    }
+    .swagger-ui .highlight-code .hljs-string {
+      color: #a2fca2 !important;
+    }
+    .swagger-ui .highlight-code .hljs-number {
+      color: #d36363 !important;
+    }
+    .swagger-ui .highlight-code .hljs-keyword {
+      color: #ffb86c !important;
+    }
+    .swagger-ui .highlight-code .hljs {
+      color: #e8e6e3 !important;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madgrades API Documentation</title>
+  <!-- Swagger UI CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function() {
+      window.ui = SwaggerUIBundle({
+        url: '/openapi.yaml',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: "StandaloneLayout",
+        docExpansion: 'list',
+        tryItOutEnabled: true,
+        displayRequestDuration: true,
+        persistAuthorization: true,
+        theme: { theme: 'dark' }
+      });
+    };
+  </script>
+</body>
+</html>

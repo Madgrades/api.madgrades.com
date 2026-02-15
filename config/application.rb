@@ -12,7 +12,7 @@ module MadGrades
     config.load_defaults 5.1
 
     # throttle requests
-    config.middleware.use Rack::Throttle::Minute, :max => 150
+    config.middleware.use Rack::Attack
 
     # allow all requests
     config.middleware.insert_before 0, Rack::Cors do

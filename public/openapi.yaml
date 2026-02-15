@@ -1,0 +1,712 @@
+openapi: 3.0.3
+info:
+  title: Madgrades API
+  version: '1.0.0'
+  description: |
+    This is the official API documentation for Madgrades. All endpoints are versioned under `/v1/` and require authentication unless otherwise noted.
+servers:
+  - url: https://api.madgrades.com/v1
+paths:
+  /courses:
+    get:
+      summary: List courses
+      parameters:
+        - in: query
+          name: sort
+          schema: { type: string, enum: [name, number, relevance] }
+          description: Sort field
+        - in: query
+          name: order
+          schema: { type: string, enum: [ASC, DESC], default: ASC }
+          description: Sort order
+        - in: query
+          name: subject
+          schema: { type: string }
+          description: Filter by subject code(s), comma-separated
+        - in: query
+          name: instructor
+          schema: { type: string }
+          description: Filter by instructor id(s), comma-separated
+        - in: query
+          name: query
+          schema: { type: string }
+          description: Search query
+        - in: query
+          name: number
+          schema: { type: string }
+          description: Filter by course number(s), comma-separated
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: per_page
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Paginated list of courses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentPage:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  totalCount:
+                    type: integer
+                  nextPageUrl:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Course'
+              example:
+                currentPage: 1
+                totalPages: 2
+                totalCount: 10
+                nextPageUrl: https://api.madgrades.com/v1/courses?page=2
+                results:
+                  - uuid: "a3e3e1c3-543d-3bb5-ae65-5f2aec4ad1de"
+                    number: 1
+                    name: "Cooperative Education Program"
+                    names: ["Cooperative Education Prog"]
+                    subjects:
+                      - code: "207"
+                        name: "Biomedical Engineering"
+                        abbreviation: "B M E"
+                        coursesUrl: "https://api.madgrades.com/v1/courses?subject=207"
+                    url: "https://api.madgrades.com/v1/courses/a3e3e1c3-543d-3bb5-ae65-5f2aec4ad1de"
+        '401':
+          description: Unauthorized - missing or invalid token
+          content:
+            application/json:
+              example:
+                error: "Unauthorized"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                error: "Not found"
+  /courses/{id}:
+    get:
+      summary: Get course details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+  /courses/{id}/grades:
+    get:
+      summary: Get course grade distributions
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Grade distributions for course
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  grade_distributions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GradeDistribution'
+  /instructors:
+    get:
+      summary: List instructors
+      parameters:
+        - in: query
+          name: query
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: per_page
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Paginated list of instructors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentPage:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  totalCount:
+                    type: integer
+                  nextPageUrl:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Instructor'
+              example:
+                currentPage: 1
+                totalPages: 2
+                totalCount: 10
+                nextPageUrl: https://api.madgrades.com/v1/instructors?page=2
+                results:
+                  - id: 5037247
+                    name: "GIORGIO YOUNG"
+                    url: "https://api.madgrades.com/v1/instructors/5037247"
+        '401':
+          description: Unauthorized - missing or invalid token
+          content:
+            application/json:
+              example:
+                error: "Unauthorized"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                error: "Not found"
+  /instructors/{id}:
+    get:
+      summary: Get instructor details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Instructor details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instructor'
+  /instructors/{id}/grades:
+    get:
+      summary: Get instructor grade distributions
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Grade distributions for instructor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  grade_distributions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GradeDistribution'
+  /subjects:
+    get:
+      summary: List subjects
+      parameters:
+        - in: query
+          name: query
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: per_page
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Paginated list of subjects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentPage:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  totalCount:
+                    type: integer
+                  nextPageUrl:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Subject'
+              example:
+                currentPage: 1
+                totalPages: 2
+                totalCount: 10
+                nextPageUrl: https://api.madgrades.com/v1/subjects?page=2
+                results:
+                  - code: "600"
+                    name: "Mathematics"
+                    abbreviation: "MATH"
+                    coursesUrl: "https://api.madgrades.com/v1/courses?subject=600"
+        '401':
+          description: Unauthorized - missing or invalid token
+          content:
+            application/json:
+              example:
+                error: "Unauthorized"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                error: "Not found"
+  /subjects/{id}:
+    get:
+      summary: Get subject details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Subject details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+  /sections/{id}:
+    get:
+      summary: Get section details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Section details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Section'
+  /course_offerings/{id}:
+    get:
+      summary: Get course offering details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Course offering details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseOffering'
+  /terms:
+    get:
+      summary: List terms
+      responses:
+        '200':
+          description: List of terms (code => name)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /explore/courses:
+    get:
+      summary: Explore course grades
+      parameters:
+        - in: query
+          name: subject
+          schema: { type: string }
+          description: Filter by subject code(s), comma-separated
+        - in: query
+          name: instructor
+          schema: { type: string }
+          description: Filter by instructor id(s), comma-separated
+        - in: query
+          name: min_gpa_total
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: min_count_avg
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: per_page
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: List of course grades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseGrade'
+  /explore/subjects:
+    get:
+      summary: Explore subject grades
+      parameters:
+        - in: query
+          name: min_gpa_total
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: min_count_avg
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: per_page
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Paginated ranked list of subject grades
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentPage:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  totalCount:
+                    type: integer
+                  nextPageUrl:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        rank:
+                          type: integer
+                        subject:
+                          $ref: '#/components/schemas/Subject'
+                        gpaTotal:
+                          type: integer
+                        countAvg:
+                          type: number
+                        gpa:
+                          type: number
+              example:
+                currentPage: 1
+                totalPages: 2
+                totalCount: 10
+                nextPageUrl: https://api.madgrades.com/v1/explore/subjects?page=2
+                results:
+                  - rank: 1
+                    subject:
+                      code: "600"
+                      name: "Mathematics"
+                      abbreviation: "MATH"
+                      coursesUrl: "https://api.madgrades.com/v1/courses?subject=600"
+                    gpaTotal: 123456
+                    countAvg: 47.2
+                    gpa: 3.12
+        '401':
+          description: Unauthorized - missing or invalid token
+          content:
+            application/json:
+              example:
+                error: "Unauthorized"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                error: "Not found"
+  /explore/instructors:
+    get:
+      summary: Explore instructor grades
+      parameters:
+        - in: query
+          name: subject
+          schema: { type: string }
+          description: Filter by subject code(s), comma-separated
+        - in: query
+          name: instructor
+          schema: { type: string }
+          description: Filter by instructor id(s), comma-separated
+        - in: query
+          name: min_gpa_total
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: min_count_avg
+          schema: { type: integer, default: 0 }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: per_page
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: List of instructor grades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstructorGrade'
+
+components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        All endpoints require an API token for authentication.
+        Pass your token in the Authorization header using this format:
+        
+            Authorization: Token token=YOUR_API_TOKEN
+        
+        Example curl usage:
+        
+            curl -H "Authorization: Token token=YOUR_API_TOKEN" https://api.madgrades.com/v1/courses
+  schemas:
+
+security:
+  - TokenAuth: []
+    Course:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: Unique course identifier (UUID)
+        number:
+          type: integer
+          description: Course number (e.g., 340)
+        name:
+          type: string
+          description: Course name (e.g., Linear Algebra)
+        names:
+          type: array
+          items:
+            type: string
+          description: Alternate course names
+        subjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+          description: List of subject objects
+        url:
+          type: string
+          description: API URL for this course
+        gradesUrl:
+          type: string
+          description: API URL for course grades
+        courseOfferings:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseOffering'
+          description: List of course offering objects
+      required: [uuid, number, name]
+    Instructor:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique instructor ID
+        name:
+          type: string
+          description: Instructor's full name
+        url:
+          type: string
+          description: API URL for this instructor
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+          description: List of sections taught by this instructor
+      required: [id, name]
+    Subject:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Subject code (e.g., 600)
+        name:
+          type: string
+          description: Subject name (e.g., Mathematics)
+        abbreviation:
+          type: string
+          description: Subject abbreviation
+        coursesUrl:
+          type: string
+          description: API URL for courses in this subject
+      required: [code, name]
+    Section:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: Unique section identifier (UUID)
+        courseUuid:
+          type: string
+        courseOfferingUuid:
+          type: string
+        sectionType:
+          type: string
+        number:
+          type: integer
+        url:
+          type: string
+        courseOfferingUrl:
+          type: string
+        schedule:
+          type: object
+          properties:
+            startTime:
+              type: string
+            endTime:
+              type: string
+            days:
+              type: string
+        room:
+          type: object
+          properties:
+            facilityCode:
+              type: string
+            roomCode:
+              type: string
+        instructors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instructor'
+      required: [uuid, courseUuid, courseOfferingUuid, sectionType, number]
+    CourseOffering:
+      type: object
+      properties:
+        uuid:
+          type: string
+        courseUuid:
+          type: string
+        termCode:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+        subjects:
+          type: array
+          items:
+            type: string
+        courseUrl:
+          type: string
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+      required: [uuid, courseUuid, termCode, name]
+    GradeDistribution:
+      type: object
+      properties:
+        course_offering_uuid:
+          type: string
+          description: UUID of the course offering
+        section_number:
+          type: integer
+          description: Section number
+        a_count:
+          type: integer
+        ab_count:
+          type: integer
+        b_count:
+          type: integer
+        bc_count:
+          type: integer
+        c_count:
+          type: integer
+        d_count:
+          type: integer
+        f_count:
+          type: integer
+        s_count:
+          type: integer
+        u_count:
+          type: integer
+        cr_count:
+          type: integer
+        n_count:
+          type: integer
+        p_count:
+          type: integer
+        i_count:
+          type: integer
+        nw_count:
+          type: integer
+        nr_count:
+          type: integer
+        other_count:
+          type: integer
+        gpa:
+          type: number
+          format: float
+          description: GPA for this distribution
+      required:
+        - course_offering_uuid
+        - section_number
+    CourseGrade:
+      type: object
+      properties:
+        course_uuid:
+          type: string
+        gpa_total:
+          type: integer
+        count_avg:
+          type: number
+          format: float
+        gpa:
+          type: number
+          format: float
+      required: [course_uuid, gpa_total, count_avg, gpa]
+    InstructorGrade:
+      type: object
+      properties:
+        instructor_id:
+          type: integer
+        gpa_total:
+          type: integer
+        count_avg:
+          type: number
+          format: float
+        gpa:
+          type: number
+          format: float
+      required: [instructor_id, gpa_total, count_avg, gpa]
+    SubjectGrade:
+      type: object
+      properties:
+        subject_code:
+          type: string
+        gpa_total:
+          type: integer
+        count_avg:
+          type: number
+          format: float
+        gpa:
+          type: number
+          format: float
+      required: [subject_code, gpa_total, count_avg, gpa]

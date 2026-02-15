@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'docs', to: 'pages#docs', as: :docs
   root to: 'pages#index'
 
   # user authentication
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy', as: 'signout'
   resources :sessions, only: [:create, :destroy]
 
-  namespace :v1, as: '' do
+  namespace :v1 do
     root to: 'pages#index'
 
     get 'terms', to: 'terms#index', as: :terms

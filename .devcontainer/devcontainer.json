@@ -1,0 +1,19 @@
+{
+  "name": "MadGrades API",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby"
+      ]
+    }
+  },
+  "forwardPorts": [
+    3000,
+    9200,
+    3306
+  ],
+  "postCreateCommand": "bundle install"
+}

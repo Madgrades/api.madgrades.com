@@ -1,6 +1,11 @@
 class PagesController < ApplicationController
+  layout false, only: :docs
+
   def index
 
+  end
+
+  def docs
   end
 
   def disconnect_provider
