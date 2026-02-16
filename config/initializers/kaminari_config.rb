@@ -17,7 +17,7 @@ module Kaminari
 
         options.merge! url_to_page_options(current_page: scope.current_page)
 
-        Kaminari::Helpers::NextPage.new(self, options).url
+        Kaminari::Helpers::NextPage.new(self, **options).url
       end
 
       def url_to_prev_page(scope, options = {})
@@ -25,7 +25,7 @@ module Kaminari
 
         options.merge! url_to_page_options(current_page: scope.current_page)
 
-        Kaminari::Helpers::PrevPage.new(self, options).url
+        Kaminari::Helpers::PrevPage.new(self, **options).url
       end
 
       def url_to_first_page(scope, options = {})
@@ -33,7 +33,7 @@ module Kaminari
 
         options.merge! url_to_page_options
 
-        Kaminari::Helpers::FirstPage.new(self, options).url
+        Kaminari::Helpers::FirstPage.new(self, **options).url
       end
 
       def url_to_last_page(scope, options = {})
@@ -41,13 +41,13 @@ module Kaminari
 
         options.merge! url_to_page_options(total_pages: scope.total_pages)
 
-        Kaminari::Helpers::LastPage.new(self, options).url
+        Kaminari::Helpers::LastPage.new(self, **options).url
       end
 
       def url_to_current_page(scope, options = {})
         options.merge! url_to_page_options(page: scope.current_page)
 
-        Kaminari::Helpers::Page.new(self, options).url
+        Kaminari::Helpers::Page.new(self, **options).url
       end
 
       protected
