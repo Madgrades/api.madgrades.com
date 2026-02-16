@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '3.2.3'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -8,13 +10,14 @@ end
 gem 'rake', '~> 13.0'
 gem 'rack-attack'
 gem 'rufus-scheduler'
-gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'dotenv-rails', require: 'dotenv/load'
 gem 'rails-html-sanitizer'
 
 # api auth
 gem 'omniauth'
-gem 'omniauth-oauth2', '~> 1.4.0'
+gem 'omniauth-oauth2', '~> 1.8'
 gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
 
 # api
 gem 'searchkick'
@@ -23,17 +26,17 @@ gem 'jbuilder'
 gem 'rack-cors'
 
 # server
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 8.0.0'
 gem 'loofah'
-gem 'puma'
+gem 'puma', '>= 5.0'
 
 # assets
+gem 'sprockets-rails'
 gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'therubyracer'
-gem 'uglifier'
-gem 'sass'
-gem 'sass-rails'
+gem 'terser'
+gem 'sassc-rails'
 
 # db
 gem 'mysql2', '~> 0.5'
@@ -43,16 +46,13 @@ group :tools do
 end
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'capybara', '~> 2.13'
+  gem 'debug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

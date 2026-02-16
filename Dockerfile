@@ -1,4 +1,4 @@
-FROM ubuntu:bionic AS build
+FROM ubuntu:jammy AS build
 WORKDIR /build
 COPY . .
 RUN .dockerfiles/build.sh
@@ -8,4 +8,4 @@ LABEL org.opencontainers.image.source https://github.com/Madgrades/api.madgrades
 WORKDIR /app
 COPY --from=build /build .
 # Default to running app. This can be overriden from docker cli.
-CMD .dockerfiles/run-app.sh
+CMD .dockerfiles/run-api.sh
