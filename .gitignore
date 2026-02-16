@@ -1,6 +1,7 @@
 .idea
 .env
 public/assets
+app/assets/builds
 
 # Ignore bundler config.
 /.bundle

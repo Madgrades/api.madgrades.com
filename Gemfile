@@ -34,7 +34,7 @@ gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'therubyracer'
 gem 'terser'
-gem 'dartsass-rails'
+gem 'sassc-rails'
 
 # db
 gem 'mysql2', '~> 0.5'

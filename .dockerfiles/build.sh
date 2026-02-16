@@ -8,5 +8,5 @@ apt-get install -y \
   default-libmysqlclient-dev \
   tzdata \
   nodejs
-gem install bundler -v 2.3.26
+gem install bundler -v 2.4.19
 bundle install
