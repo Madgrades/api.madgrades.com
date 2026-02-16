@@ -24,11 +24,6 @@ Rails.application.configure do
   # Enable public file server for development so static files (like openapi.yaml) are served
   config.public_file_server.enabled = true
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.perform_caching = false
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
