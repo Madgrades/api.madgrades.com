@@ -8,5 +8,9 @@ apt-get install -y \
   default-libmysqlclient-dev \
   tzdata \
   nodejs
+
+# Upgrade RubyGems to avoid version warnings
+gem update --system 3.2.3
+
 gem install bundler -v 4.0.6
 bundle install
