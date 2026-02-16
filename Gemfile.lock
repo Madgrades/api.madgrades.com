@@ -100,6 +100,15 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
+    elastic-transport (8.4.1)
+      faraday (< 3)
+      multi_json
+    elasticsearch (8.19.3)
+      elastic-transport (~> 8.3)
+      elasticsearch-api (= 8.19.3)
+      ostruct
+    elasticsearch-api (8.19.3)
+      multi_json
     erb (6.0.1)
     erubi (1.13.1)
     et-orbi (1.4.0)
@@ -167,6 +176,7 @@ GEM
     mini_mime (1.1.5)
     minitest (6.0.1)
       prism (~> 1.5)
+    multi_json (1.19.1)
     multi_xml (0.8.1)
       bigdecimal (>= 3.1, < 5)
     mysql2 (0.5.7)
@@ -207,6 +217,7 @@ GEM
     omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    ostruct (0.6.3)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -344,6 +355,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   debug
   dotenv-rails
+  elasticsearch (~> 8.0)
   font-awesome-rails
   jbuilder
   jquery-rails
@@ -372,7 +384,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-  ruby 3.2.3
+  ruby 3.2.10
 
 BUNDLED WITH
   4.0.6

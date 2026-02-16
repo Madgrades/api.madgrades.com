@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.2.3'
+ruby '3.2.10'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -21,6 +21,7 @@ gem 'omniauth-rails_csrf_protection'
 
 # api
 gem 'searchkick'
+gem 'elasticsearch', '~> 8.0'
 gem 'kaminari'
 gem 'jbuilder'
 gem 'rack-cors'

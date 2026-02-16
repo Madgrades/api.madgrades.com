@@ -1,4 +1,4 @@
-FROM ruby:3.2.3 AS build
+FROM ruby:3.2.10 AS build
 WORKDIR /build
 COPY . .
 RUN .dockerfiles/build.sh
