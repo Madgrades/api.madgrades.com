@@ -1,8 +1,0 @@
-{
-  "name": "GradesCentral API",
-  "description": "Rails API for UW Madison course data and grade distributions",
-  "version": "1.0.0",
-  "config": {
-    "sessionStartHook": ".claude/hooks/session_start.sh"
-  }
-}
