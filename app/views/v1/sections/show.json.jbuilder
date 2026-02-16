@@ -1,5 +1,5 @@
 json.partial! 'v1/sections/section', section: @section
-json.course_offering_url course_offering_url(@section.course_offering_uuid)
+json.course_offering_url v1_course_offering_url(@section.course_offering_uuid)
 if @section.schedule.present?
   json.schedule do
     json.partial! 'v1/schedules/schedule', schedule: @section.schedule

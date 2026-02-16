@@ -1,2 +1,2 @@
 json.extract! instructor, :id, :name
-json.url instructor_url(instructor)
+json.url v1_instructor_url(instructor)

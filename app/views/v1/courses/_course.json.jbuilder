@@ -6,4 +6,4 @@ json.subjects course.subjects do |subject|
   json.abbreviation subject.abbreviation
   json.code subject.code
 end
-json.url course_url(course)
+json.url v1_course_url(course)
